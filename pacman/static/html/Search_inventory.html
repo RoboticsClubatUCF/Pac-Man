@@ -1,0 +1,26 @@
+{% extends 'inventory.html' %}
+
+{% block content %}
+<center style="margin-top: 100px;">
+    {% if searched %}
+    <h1>{{ num_results }} Results for '{{ searched }}' </h1>
+    <hr />
+    <br />
+    <table>
+        <tr class="top-row">
+            <th>Name</th>
+            <th>Description</th>
+            <th>Quantity</th>
+        </tr>
+        {% for Item in results %}
+        <tr>
+            <td>{{ Item.name }} </td>
+            <td>{{ Item.description }} </td>
+            <td>{{ Item.quantity }} </td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+</center>
+
+{% endblock %}
