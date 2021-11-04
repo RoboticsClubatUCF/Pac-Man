@@ -31,9 +31,18 @@ body {
   border:1px solid #d9ad77;
   color:#ddd;
 }
-table,th, td {
+table, th, td {
   border:1px solid #d9ad77;
   color:#ddd;
+}
+tbody tr:nth-child(odd) td {
+  background-color: #333;
+  color:#f2f2f2 ;
+}
+
+tbody tr:nth-child(even) td {
+  background-color: #997549;
+  color: #000;
 }
 
 input[type="text"] {
