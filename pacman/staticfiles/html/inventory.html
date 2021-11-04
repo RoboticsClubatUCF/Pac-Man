@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+
+<head>
+	<meta charset="UTF-8" />
+	<link rel="stylesheet" type="text/css" href="{% static 'css/inventory.css'%}" />
+	<Title>Pac-Man</Title>
+	<script src="https://kit.fontawesome.com/afd6aa68df.js" crossorigin="anonymous"></script>
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@200&display=swap" rel="stylesheet" />
+</head>
+<nav class="search-displace">
+	<h1 class="title">Inventory @ Robotics Club</h1>
+	<div id="wrap">
+		<form method="post" action="{% url 'search-inventory' %}" autocomplete="on">
+			{% csrf_token %}
+			<input id="search" name="Search" type="text" placeholder="I'm Looking for . . .">
+			<input id="search_submit" value="Rechercher" type="submit">
+		</form>
+	</div>
+</nav>
+
+<body>
+	<div class="searchresults">
+		{% block content %}{% endblock %}
+	</div>
+</body>
+
+</html>

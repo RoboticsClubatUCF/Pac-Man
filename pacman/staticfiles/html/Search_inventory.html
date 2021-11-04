@@ -1,0 +1,29 @@
+{% extends 'inventory.html' %}
+
+{% block content %}
+<center style="margin-top: 100px;">
+    {% if searched %}
+    <h1>{{ num_results }} Result(s) for '{{ searched }}' </h1>
+    <hr />
+    <br />
+    <table>
+        <tr class="top-row">
+            <th>Name</th>
+            <th>Description</th>
+            <th>Location</th>
+            <th>Quantity</th>
+        </tr>
+        {% for Item in results %}
+        <tr>
+            <td>{{ Item.name }} </td> <!-- Make sure to make this into a nested a tag for location stuff-->>
+            <td>{{ Item.description }} </td>
+            <td> {{ Item.location }}</td>
+            <!--Soon the idea would be to make this into a link that opens the Lab location url, in which from there we can do a billion other things-->
+            <td>{{ Item.quantity }} </td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+</center>
+<hr style="width: 80%;" />
+{% endblock %}

@@ -1,10 +1,33 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-
+from django.template.loader import get_template;
+from .models import Item
 # Create your views here.
+
 def home(request):
-	return HttpResponse("Hello world! Welcome to the inventory home page.")
+	return render(request,"inventory.html",
+	{})
+	
+def search_inventory(request):
+	if request.method == "POST":
+		searched = request.POST['Search'] #returns what they searched
+		#results = Item.objects.all()
+		names = Item.objects.filter(name__icontains=searched)
+		generals = Item.objects.filter(general_type__icontains=searched)
+		locations = Item.objects.filter(location__icontains=searched)
+		description = Item.objects.filter(description__icontains=searched)
+		results = names | generals | locations | description
+		results = results.order_by('name') # the start of sorting hell
+		num_results = results.count()
+		return render(request,'Search_inventory.html',
+		{'searched' : searched,
+		'results' : results,
+		'num_results': num_results
+		})
+
+
 
 # Create a view for lab location.
 def lab_location(request):
-	return HttpResponse("Inventory lab location page scaffold.")
+	return render(request,'Lab_location.html',
+	{}) #the goal is to get the location of the item selected, and print that
