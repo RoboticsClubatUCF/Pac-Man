@@ -32,7 +32,7 @@ def lab_location(request, item_id):
 	desired_item=Item.objects.filter(id__icontains=item_id)
 	return render(request,'lab_location.html',
 	{
-		'place':"Basic idea for item number " + str(item_id) + "'s location will be handled"
+		'place':"Location for Item #" +str(item_id)
 	}) #the goal is to get the location of the item selected, and print that
 
 def item_page(request, item_id):
