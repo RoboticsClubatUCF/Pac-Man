@@ -4,7 +4,19 @@
   font-family: 'Noto Sans Mono', monospace;
   src: url('https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@200&display=swap');
 }
-
+a{
+  color:#ddd;
+  text-decoration: none;
+}
+a:hover{
+  color :#f2f2f2;
+}
+a:visited{
+  color:#ddd;
+}
+a:active{
+  color: #d9ad77;
+}
 *{
   font-family: monospace;
 }
