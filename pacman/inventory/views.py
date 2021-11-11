@@ -28,9 +28,12 @@ def search_inventory(request):
 
 
 # Create a view for lab location.
-def lab_location(request):
+def lab_location(request, item_id):
+	desired_item=Item.objects.filter(id__icontains=item_id)
 	return render(request,'lab_location.html',
-	{}) #the goal is to get the location of the item selected, and print that
+	{
+		'place':"Basic idea for item number " + str(item_id) + "'s location will be handled"
+	}) #the goal is to get the location of the item selected, and print that
 
 def item_page(request, item_id):
 	searched_item = Item.objects.filter(id__icontains=item_id)
