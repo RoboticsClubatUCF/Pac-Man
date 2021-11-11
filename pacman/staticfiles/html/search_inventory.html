@@ -1,24 +1,24 @@
 {% extends 'inventory.html' %}
-
+{% load static %}
 {% block content %}
 <center style="margin-top: 100px;">
+    <script src="{% static 'js/tableSort.js'%}"></script>
     {% if searched %}
     <h1>{{ num_results }} Result(s) for '{{ searched }}' </h1>
     <hr />
     <br />
-    <table>
+    <table id=item_table>
         <tr class="top-row">
-            <th>Name</th>
-            <th>Description</th>
-            <th>Location</th>
-            <th>Quantity</th>
+            <th onclick="sortTable(0)">Name</th>
+            <th onclick="sortTable(1)">Description</th>
+            <th onclick="sortTable(2)">Location</th>
+            <th onclick="sortTable(3)">Quantity</th>
         </tr>
         {% for Item in results %}
         <tr>
-            <td>{{ Item.name }} </td> <!-- Make sure to make this into a nested a tag for location stuff-->>
+            <td>{{ Item.name }}  </td> 
             <td>{{ Item.description }} </td>
-            <td> {{ Item.location }}</td>
-            <!--Soon the idea would be to make this into a link that opens the Lab location url, in which from there we can do a billion other things-->
+            <td> {{ Item.location }} </td>
             <td>{{ Item.quantity }} </td>
         </tr>
         {% endfor %}

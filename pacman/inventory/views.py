@@ -19,15 +19,24 @@ def search_inventory(request):
 		results = names | generals | locations | description
 		results = results.order_by('name') # the start of sorting hell
 		num_results = results.count()
-		return render(request,'Search_inventory.html',
+		return render(request,'search_inventory.html',
 		{'searched' : searched,
 		'results' : results,
-		'num_results': num_results
+		'num_results': num_results,
 		})
 
 
 
 # Create a view for lab location.
 def lab_location(request):
-	return render(request,'Lab_location.html',
+	return render(request,'lab_location.html',
 	{}) #the goal is to get the location of the item selected, and print that
+
+def item_page(request, item_id):
+	searched_item = Item.objects.filter(id__icontains=item_id)
+	return render(request,'search_inventory.html', # swap Search_inventory.html to a new page
+	{
+	'searched' : item_id,
+	'results' : searched_item,
+	'num_results': 1,
+	})
