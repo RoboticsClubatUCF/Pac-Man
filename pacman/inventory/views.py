@@ -26,7 +26,9 @@ def search_inventory(request):
 		})
 
 
-
+# TODO 
+#  Get a top down view of the lab's floor plan
+#  Properly implement "desired_item" var
 # Create a view for lab location.
 def lab_location(request, item_id):
 	desired_item=Item.objects.filter(id__icontains=item_id)
