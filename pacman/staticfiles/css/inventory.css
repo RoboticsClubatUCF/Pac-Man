@@ -4,32 +4,45 @@
   font-family: 'Noto Sans Mono', monospace;
   src: url('https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@200&display=swap');
 }
-a{
-  color:#ddd;
+
+a {
+  color: #ddd;
   text-decoration: none;
 }
-a:hover{
-  color :#f2f2f2;
+
+a:hover {
+  color: #f2f2f2;
+  text-decoration: #f2f2f2;
+  border-style:solid;
+  border-radius: 7px;
+  border-width: 1px;
 }
-a:visited{
-  color:#ddd;
+
+a:visited {
+  color: #ddd;
 }
-a:active{
+
+a:active {
   color: #d9ad77;
 }
-*{
+
+* {
   font-family: monospace;
 }
-.search-displace{
-  margin-top:-10px;
+
+.search-displace {
+  margin-top: -10px;
 }
-.title{
-  color:#F2C572;
+
+.title {
+  color: #F2C572;
 }
+
 body {
-	background: #262626;
-	font-size: 15px;
+  background: #262626;
+  font-size: 15px;
 }
+
 #wrap {
   margin: 0px 50px;
   display: inline-block;
@@ -38,18 +51,21 @@ body {
   float: right;
   padding: 0;
 }
-.top-row{
+
+.top-row {
   font-size: 16pt;
-  border:1px solid #d9ad77;
-  color:#ddd;
+  border: 1px solid #d9ad77;
+  color: #ddd;
 }
+
 table, th, td {
-  border:1px solid #d9ad77;
-  color:#ddd;
+  border: 1px solid #d9ad77;
+  color: #ddd;
 }
+
 tbody tr:nth-child(odd) td {
   background-color: #333;
-  color:#f2f2f2 ;
+  color: #f2f2f2;
 }
 
 tbody tr:nth-child(even) td {
@@ -88,6 +104,7 @@ input[type="text"]:focus {
   border-bottom: 1px solid #BBB;
   cursor: text;
 }
+
 input[type="submit"] {
   height: 67px;
   width: 63px;
@@ -97,7 +114,7 @@ input[type="submit"] {
   border: none;
   color: #F2C572;
   background-color: #F2C572;
-  background-image: url("https://img.icons8.com/external-kiranshastry-solid-kiranshastry/64/000000/external-search-logistic-delivery-kiranshastry-solid-kiranshastry.png") ;
+  background-image: url("https://img.icons8.com/external-kiranshastry-solid-kiranshastry/64/000000/external-search-logistic-delivery-kiranshastry-solid-kiranshastry.png");
   position: absolute;
   top: 0;
   right: 0;
@@ -107,9 +124,11 @@ input[type="submit"] {
   cursor: pointer;
   transition: opacity .4s ease;
 }
+
 input[type="submit"]:hover {
   opacity: 0.8;
 }
+
 th {
   cursor: pointer;
 }

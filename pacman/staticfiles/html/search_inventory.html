@@ -4,7 +4,7 @@
 <center style="margin-top: 100px;">
     <script src="{% static 'js/tableSort.js'%}"></script>
     {% if searched %}
-    <h1>{{ num_results }} Result(s) for '{{ searched }}' </h1>
+    <h1 style="color: #F2C572;">{{ num_results }} Result(s) for '{{ searched }}' </h1>
     <hr />
     <br />
     <table id=item_table>
@@ -16,9 +16,9 @@
         </tr>
         {% for Item in results %}
         <tr>
-            <td><a href="/search_inventory/{{Item.id}}">{{ Item.name }}</a> </td>
+            <td> <a href="/search_inventory/{{Item.id}}">{{ Item.name }}</a> </td>
             <td>{{ Item.description }} </td>
-            <td> {{ Item.location }} </td>
+            <td> <a href="/location_map/{{Item.id}}"> {{ Item.location }} </a> </td>
             <td>{{ Item.quantity }} </td>
         </tr>
         {% endfor %}
