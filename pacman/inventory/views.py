@@ -42,7 +42,7 @@ def lab_location(request, item_id):
                   {
                       'searched': searched_item,
                       'dir_loc': location_dir,
-					  'other_items': other_items,
+					  #'other_items': other_items,
                   })
 
 
