@@ -10,7 +10,11 @@ def home(request):
     return render(request, "inventory.html",
                   {})
 
-
+# TODO
+#  Find a way to search location foreign key, 
+#    by having a var named "name" within 
+#    the location model, or finding
+#    some other solution to the issue
 def search_inventory(request):
     if request.method == "POST":
         searched = request.POST['Search']  # returns what they searched
@@ -18,7 +22,9 @@ def search_inventory(request):
         names = Item.objects.filter(name__icontains=searched)
         generals = Item.objects.filter(general_type__icontains=searched)
         description = Item.objects.filter(description__icontains=searched)
-        results = names | generals | description 
+        # [locations for items in names if str(items.location) == searched: locations= locations + items]
+
+        results = names | generals | description  # | location_collection
         results = results.order_by('name')  # the start of sorting hell
         num_results = results.count()
         return render(request, 'search_inventory.html',
@@ -30,19 +36,18 @@ def search_inventory(request):
 
 # TODO
 #  Get a top down view of the lab's floor plan
-#  Properly implement "desired_item" var
-# Create a view for lab location.
+
 
 def lab_location(request, item_id):
     searched_item = Item.objects.filter(id__contains=item_id).first()
     location_dir = str(searched_item.location)[:2]
-	# The Goal here is to get the ability to search for similar items 
-	#other_items = 
+    # The Goal here is to get the ability to search for similar items
+    # other_items =
     return render(request, 'lab_location.html',
                   {
                       'searched': searched_item,
                       'dir_loc': location_dir,
-					  #'other_items': other_items,
+                      # 'other_items': other_items,
                   })
 
 
