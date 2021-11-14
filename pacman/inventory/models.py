@@ -15,6 +15,35 @@ from django.db.models.base import Model
 # ]
 
 
+def location_id_fix(a):
+    if (str(a) == "None"):
+        return ""
+    else:
+        return a
+
+
+class Location(Model):
+    MACRO_LOCATIONS = [
+        ('T', 'Table'),
+        ('R', 'Rack'),
+        ('C', 'Cabinet'),
+        ('B', 'WorkBench'),
+    ]
+    SUB_LOCATIONS = [
+        ('S', 'Shelf'),
+        ('U', 'Underneath'),
+    ]
+    macro_location = models.CharField(
+        max_length=1, null=True, blank=True, choices=MACRO_LOCATIONS)
+    macro_location_id = models.IntegerField(null=True, blank=True)
+    micro_location = models.CharField(
+        max_length=1, null=True, blank=True, choices=SUB_LOCATIONS)
+    micro_location_id = models.IntegerField(null=True, blank=True)
+
+    def __str__(self):
+        return self.macro_location + str(location_id_fix(self.macro_location_id)) + self.micro_location + str(location_id_fix(self.micro_location_id))
+
+
 class Item(Model):
     GENERAL_LOCATIONS = [
         ('Electronics', 'Electronics'),
@@ -42,9 +71,9 @@ class Item(Model):
     quantity = models.IntegerField()
     general_type = models.CharField(
         blank=True, null=True, max_length=32, choices=GENERAL_TYPES)
-    new_location = models.CharField(max_length=32,blank=True,null=True)
-    location = models.CharField(
-        max_length=32, choices=GENERAL_LOCATIONS, blank=True, null=True)
+    location = models.ForeignKey(Location, on_delete=models.CASCADE, blank=True,
+                                 null=True, help_text="Location(s) this item can be found at")
     #image = models.ImageField(upload_to ="item_imgs",blank=True,null=True)
+
     def __str__(self):
         return self.name
