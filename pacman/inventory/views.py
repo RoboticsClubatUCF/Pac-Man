@@ -14,7 +14,7 @@ def home(request):
 #  Find a way to search location foreign key, 
 #    by having a var named "name" within 
 #    the location model, or finding
-#    some other solution to the issue
+#    some other solution to the issue 
 def search_inventory(request):
     if request.method == "POST":
         searched = request.POST['Search']  # returns what they searched
