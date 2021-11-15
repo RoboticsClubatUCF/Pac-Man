@@ -22,9 +22,10 @@ def search_inventory(request):
         names = Item.objects.filter(name__icontains=searched)
         generals = Item.objects.filter(general_type__icontains=searched)
         description = Item.objects.filter(description__icontains=searched)
-        locations = Item.objects.select_related().filter()
+        location = Item.objects.filter(location__name__icontains=searched)
+
         # [locations for items in names if str(items.location) == searched: locations= locations + items]
-        results = names | generals | description #| locations 
+        results = names | generals | description | location
         results = results.order_by('name')  # the start of sorting hell
         num_results = results.count()
         item_bio_page = False

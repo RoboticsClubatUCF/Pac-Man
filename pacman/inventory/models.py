@@ -39,9 +39,13 @@ class Location(Model):
     micro_location = models.CharField(
         max_length=1, null=True, blank=True, choices=SUB_LOCATIONS)
     micro_location_id = models.IntegerField(null=True, blank=True)
-
+    name = models.CharField(max_length=4,null=True,blank=True)
+    
     def __str__(self):
         return self.macro_location + str(location_id_fix(self.macro_location_id)) + self.micro_location + str(location_id_fix(self.micro_location_id))
+    def save(self, *args, **kwargs):
+        self.name = self.macro_location + str(location_id_fix(self.macro_location_id)) + self.micro_location + str(location_id_fix(self.micro_location_id))
+        super(Location,self).save(*args, **kwargs)
 
 
 class Item(Model):
