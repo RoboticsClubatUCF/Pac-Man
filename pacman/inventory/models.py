@@ -45,19 +45,6 @@ class Location(Model):
 
 
 class Item(Model):
-    GENERAL_LOCATIONS = [
-        ('Electronics', 'Electronics'),
-        ('Batteries', 'Batteries'),
-        ('Raw Metals', 'Raw Metals'),
-        ('Hand Tools', 'Hand Tools'),
-        ('Safety Equipment', 'Safety Equipment'),
-        ('Back Table', 'Back Table'),
-        ('Lockers', 'Lockers'),
-        ('Center Table', 'Center Table'),
-        ('Computer Parts', 'Computer Parts'),
-        ('Front Table', 'Front Table'),
-    ]
-
     GENERAL_TYPES = [
         ('Electronics', 'ELECTRONICS'),
         ('Raw Material', 'RAW MATERIAL'),
@@ -67,13 +54,13 @@ class Item(Model):
     ]
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=128)
-    description = models.TextField(max_length=512, blank=True, null=True)
+    description = models.TextField(max_length=2048, blank=True, null=True)
     quantity = models.IntegerField()
     general_type = models.CharField(
         blank=True, null=True, max_length=32, choices=GENERAL_TYPES)
     location = models.ForeignKey(Location, on_delete=models.CASCADE, blank=True,
                                  null=True, help_text="Location(s) this item can be found at")
     #image = models.ImageField(upload_to ="item_imgs",blank=True,null=True)
-
+    
     def __str__(self):
-        return self.name
+        return self.name + "  -  " + str(self.location)

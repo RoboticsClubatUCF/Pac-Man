@@ -22,15 +22,17 @@ def search_inventory(request):
         names = Item.objects.filter(name__icontains=searched)
         generals = Item.objects.filter(general_type__icontains=searched)
         description = Item.objects.filter(description__icontains=searched)
+        locations = Item.objects.select_related().filter()
         # [locations for items in names if str(items.location) == searched: locations= locations + items]
-
-        results = names | generals | description  # | location_collection
+        results = names | generals | description #| locations 
         results = results.order_by('name')  # the start of sorting hell
         num_results = results.count()
+        item_bio_page = False
         return render(request, 'search_inventory.html',
                       {'searched': searched,
                        'results': results,
                        'num_results': num_results,
+                       'item_page':item_bio_page,
                        })
 
 
@@ -53,9 +55,10 @@ def lab_location(request, item_id):
 
 def item_page(request, item_id):
     searched_item = Item.objects.filter(id__icontains=item_id)
-
+    item_bio_page = True
     return render(request, 'search_inventory.html',  # swap Search_inventory.html to a new page
                   {
                       'searched': searched_item.first().name,
                       'results': searched_item,
+                      'item_page':item_bio_page,
                   })
