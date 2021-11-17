@@ -45,12 +45,13 @@ def lab_location(request, item_id):
     searched_item = Item.objects.filter(id__contains=item_id).first()
     location_dir = str(searched_item.location)[:2]
     # The Goal here is to get the ability to search for similar items
-    # other_items =
+    print(searched_item.location)
+    other_items = Item.objects.filter(location__name__icontains=searched_item.location)
     return render(request, 'lab_location.html',
                   {
                       'searched': searched_item,
                       'dir_loc': location_dir,
-                      # 'other_items': other_items,
+                      'other_items': other_items,
                   })
 
 

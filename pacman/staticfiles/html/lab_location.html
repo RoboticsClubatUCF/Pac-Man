@@ -11,22 +11,24 @@
     <img class="location_img" src="{{ STATIC_PREFIX }}img/lab_locations/{{dir_loc}}.png" alt="">
     <hr />
     <h1 style="text-align: center; font-size: 32; font-weight: 900;"> Other Items found Here : </h1>
-    <table id=item_table>
-        <tr class="top-row">
-            <th onclick="sortTable(0)">Name</th>
-            <th onclick="sortTable(1)">Description</th>
-            <th onclick="sortTable(2)">Location</th>
-            <th onclick="sortTable(3)">Quantity</th>
-        </tr>
-        {% for Item in other_items %}
-        <tr>
-            <td> <a href="/search_inventory/{{Item.id}}">{{ Item.name }}</a> </td>
-            <td>{{ Item.description }} </td>
-            <td> <a href="/location_map/{{Item.id}}"> {{ Item.location }} </a> </td>
-            <td>{{ Item.quantity }} </td>
-        </tr>
-        {% endfor %}
-    </table>
+    <div style="display: block;margin: auto;width: 80%;">
+        <table id=item_table>
+            <tr class="top-row">
+                <th onclick="sortTable(0)">Name</th>
+                <th onclick="sortTable(1)">Description</th>
+                <th onclick="sortTable(2)">Location</th>
+                <th onclick="sortTable(3)">Quantity</th>
+            </tr>
+            {% for Item in other_items %}
+            <tr>
+                <td> <a href="/search_inventory/{{Item.id}}">{{ Item.name }}</a> </td>
+                <td>{{ Item.description }} </td>
+                <td> <a href="/location_map/{{Item.id}}"> {{ Item.location }} </a> </td>
+                <td>{{ Item.quantity }} </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
 </div>
 {% endblock %}
 
