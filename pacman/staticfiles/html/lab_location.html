@@ -9,8 +9,8 @@
     <!--The next step from here is to programically add an image based on what this item's location is-->
     <!--Now we resolve the location of the object, and display the image with the corresponding name-->
     <img class="location_img" src="{{ STATIC_PREFIX }}img/lab_locations/{{dir_loc}}.png" alt="">
-    <h1 style="text-align: center; font-size: 14; font-weight: 900;margin-top: 100px auto;">Scroll Down for More</h1>
-    <hr />
+    <h1 style="text-align: center; font-size: 14; font-weight: 900;margin-top: 150px auto;">Scroll Down for More</h1>
+    <hr style="margin-top: 370px;"/>
     <h1 style="text-align: center; font-size: 32; font-weight: 900;"> Other Items found Here : </h1>
     <div style="display: block;margin: auto;width: 80%;">
         <table id=item_table>
@@ -23,7 +23,12 @@
             {% for Item in other_items %}
             <tr>
                 <td> <a href="/search_inventory/{{Item.id}}">{{ Item.name }}</a> </td>
-                <td>{{ Item.description }} </td>
+                <td>{% if Item.description|length > 24 and not item_page%}
+                    {{ Item.description|make_list|slice:':24'|join:'' }}...
+                    {% else %}
+                    {{Item.description}}
+                    {% endif %}
+                </td>
                 <td> <a href="/location_map/{{Item.id}}"> {{ Item.location }} </a> </td>
                 <td>{{ Item.quantity }} </td>
             </tr>
