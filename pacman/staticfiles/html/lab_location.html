@@ -7,9 +7,13 @@
     <h1 style="text-align: center; font-size: 32; font-weight: 900;">"{{ searched.name }}" can be found :</h1>
     <hr />
     <img class="location_img" src="{{ STATIC_PREFIX }}img/lab_locations/{{dir_loc}}.png" alt="">
-    <h1 style="text-align: center; font-size: 14; font-weight: 900;margin-top: 150px auto;">Scroll Down for More</h1>
-    <hr style="margin-top: 370px;"/>
-    <h1 style="text-align: center; font-size: 32; font-weight: 900;"> Other Items found Here : </h1>
+    <div style="margin-top: 150px; margin: auto; width: 60%; display: block;text-align: center;">
+        <hr />
+        <h1 style="text-align: center;font-size: 14;">Scroll Down for More</h1>
+        <hr />
+    </div>
+    <hr style="margin-top: 370px;" />
+    <h1 style="text-align: center; font-size: 32; font-weight: 900;font-weight: 900;"> Other Items found Here : </h1>
     <div style="margin: auto;width: 80%;">
         <table id=item_table align="center">
             <tr class="top-row">
@@ -19,6 +23,7 @@
                 <th onclick="sortTable(3)">Quantity</th>
             </tr>
             {% for Item in other_items %}
+            {% if Item.id != searched.id %}
             <tr>
                 <td> <a href="/search_inventory/{{Item.id}}">{{ Item.name }}</a> </td>
                 <td>{% if Item.description|length > 24 and not item_page%}
@@ -30,9 +35,9 @@
                 <td> <a href="/location_map/{{Item.id}}"> {{ Item.location }} </a> </td>
                 <td>{{ Item.quantity }} </td>
             </tr>
+            {% endif %}
             {% endfor %}
         </table>
     </div>
 </div>
 {% endblock %}
-
