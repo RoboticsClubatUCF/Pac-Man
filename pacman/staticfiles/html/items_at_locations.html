@@ -1,0 +1,34 @@
+{% extends 'inventory.html' %}
+{% block content %}
+{% load static %}
+{% get_static_prefix as STATIC_PREFIX %}
+<div style="margin-top: 100px;">
+    <hr />
+    <img class="location_img" src="{{ STATIC_PREFIX }}img/lab_locations/{{dir_loc}}.png" alt="">
+    <hr />
+    <h1 style="text-align: center; font-size: 32; font-weight: 900;font-weight: 900;"> Items found Here : </h1>
+    <div style="margin: auto;width: 80%;">
+        <table id=item_table align="center">
+            <tr class="top-row">
+                <th onclick="sortTable(0)">Name</th>
+                <th onclick="sortTable(1)">Description</th>
+                <th onclick="sortTable(2)">Location</th>
+                <th onclick="sortTable(3)">Quantity</th>
+            </tr>
+            {% for Item in other_items %}
+            <tr>
+                <td> <a href="/search_inventory/{{Item.id}}">{{ Item.name }}</a> </td>
+                <td>{% if Item.description|length > 24 and not item_page%}
+                    {{ Item.description|make_list|slice:':24'|join:'' }}...
+                    {% else %}
+                    {{Item.description}}
+                    {% endif %}
+                </td>
+                <td> <a href="/location_map/{{Item.id}}"> {{ Item.location }} </a> </td>
+                <td>{{ Item.quantity }} </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}

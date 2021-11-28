@@ -1,8 +1,5 @@
-/*
-IF im going to be brutally honest, this vm runs at 13fps,
-and writing any code is a chore, especially with how often characters are not registered
-YES, this is stolen straight from W3Schools, and I do not care. . . 
-*/
+// Taken from W3 schools Sorts a table based on the clicked header
+// https://www.w3schools.com/howto/howto_js_sort_table.asp
 function sortTable(n) {
   var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
   table = document.getElementById("item_table");

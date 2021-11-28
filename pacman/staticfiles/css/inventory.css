@@ -1,34 +1,42 @@
 @import url(https://fonts.googleapis.com/css?family=Lato:100,300,400,700);
 @import url(https://raw.github.com/FortAwesome/Font-Awesome/master/docs/assets/css/font-awesome.min.css);
+
 @font-face {
   font-family: 'Noto Sans Mono', monospace;
   src: url('https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@200&display=swap');
 }
-*{
-  cursor:default;
+
+* {
+  cursor: default;
+  font-family: monospace;
 }
+
 a {
   color: #ddd;
   text-decoration: none;
 }
-h1{
+
+h1 {
   color: #d3d3d3;
 }
+
 a:hover {
   color: #f2f2f2;
   text-decoration: #f2f2f2;
-  border-style:solid;
+  border-style: solid;
   border-radius: 7px;
   border-width: 1px;
   cursor: pointer;
 }
-.location_img{
+
+.location_img {
   margin: auto;
   height: 512px;
   width: 512px;
   overflow: hidden;
   display: block;
 }
+
 a:visited {
   color: #ddd;
 }
@@ -37,9 +45,6 @@ a:active {
   color: #d9ad77;
 }
 
-* {
-  font-family: monospace;
-}
 
 .search-displace {
   margin-top: -10px;

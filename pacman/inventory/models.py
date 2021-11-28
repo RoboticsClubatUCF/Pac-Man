@@ -55,9 +55,8 @@ class Item(Model):
     quantity = models.PositiveIntegerField()
     general_type = models.CharField(
         blank=True, null=True, max_length=32, choices=GENERAL_TYPES)
-    location = models.ForeignKey(Location, on_delete=models.CASCADE, blank=True,
-                                 null=True, help_text="Location this item can be found at")
-    #image = models.ImageField(upload_to ="item_imgs",blank=True,null=True)
+    location = models.ForeignKey(Location, on_delete=models.CASCADE, blank=True,null=True, help_text="Location this item can be found at")
+    image = models.CharField(max_length=2048,blank=True,null=True) # hopefully this is long enough to store any img url
 
     def __str__(self):
         return self.name + "  -  " + str(self.location)
