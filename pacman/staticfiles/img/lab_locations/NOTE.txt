@@ -1,0 +1,3 @@
+~~~~~~~~~~~~~~
+The images in this folder were conviently named temporarily, and have little purpose in production
+they are being used to debug the location mapping system

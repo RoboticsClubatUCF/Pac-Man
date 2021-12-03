@@ -1,0 +1,36 @@
+{% extends 'inventory.html' %}
+{% load static %}
+{% block content %}
+<center style="margin-top: 100px;">
+    <script src="{% static 'js/tableSort.js'%}"></script>
+    {% if searched %}
+    <h1 style="color: #F2C572;">{{ num_results }} Result(s) for '{{ searched }}' </h1>
+    <hr />
+    <br />
+    <div style="margin:auto;">
+        <table id=item_table>
+            <tr class="top-row">
+                <th onclick="sortTable(0)">Name</th>
+                <th onclick="sortTable(1)">Description</th>
+                <th onclick="sortTable(2)">Location</th>
+                <th onclick="sortTable(3)">Quantity</th>
+            </tr>
+            {% for Item in results %}
+            <tr>
+                <td> <a href="/search_inventory/{{Item.id}}">{{ Item.name }}</a> </td>
+                <td>{% if Item.description|length > 24 and not item_page%}
+                    {{ Item.description|make_list|slice:':24'|join:'' }}...
+                    {% else %}
+                    {{Item.description}}
+                    {% endif %}
+                </td>
+                <td> <a href="/location_map/{{Item.id}}"> {{ Item.location }} </a> </td>
+                <td>{{ Item.quantity }} </td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+    </div>
+</center>
+<hr style="width: 80%;" />
+{% endblock %}

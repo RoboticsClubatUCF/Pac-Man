@@ -12,15 +12,16 @@
 	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@200&display=swap" rel="stylesheet" />
 </head>
 <nav class="search-displace">
-	<h1 class="title">Inventory @ Robot-club</h1>
+	<h1 class="title">Inventory @ Robotics Club</h1>
 	<div id="wrap">
 		<form method="post" action="{% url 'search-inventory' %}" autocomplete="on">
 			{% csrf_token %}
 			<input id="search" name="Search" type="text" placeholder="I'm Looking for . . .">
-			<input id="search_submit" value="Rechercher"type="submit">
+			<input id="search_submit" value="Rechercher" type="submit">
 		</form>
 	</div>
 </nav>
+
 <body>
 	<div class="searchresults">
 		{% block content %}{% endblock %}
