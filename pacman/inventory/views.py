@@ -7,12 +7,16 @@ from .models import Item
 
 
 def home(request):
+    pages = 0
     return render(request, "inventory.html",
-                  {})
+                  {
+                      'pages': pages,
+                  })
 
 
 def search_inventory(request):
     if request.method == "POST":
+        items_per_page = 1
         searched = request.POST['Search']  # returns what they searched
         names = Item.objects.filter(name__icontains=searched)
         generals = Item.objects.filter(general_type__icontains=searched)
@@ -22,12 +26,21 @@ def search_inventory(request):
         results = names | generals | description | location
         results = results.order_by('name')  # the start of sorting hell
         num_results = results.count()
+        num_pages = 1
+
+        if (num_results > items_per_page):
+            num_ = num_results
+            while(num_ > items_per_page):
+                num_pages+=1
+                num_ -= items_per_page
+        
         item_bio_page = False
         return render(request, 'search_inventory.html',
                       {'searched': searched,
                        'results': results,
                        'num_results': num_results,
                        'item_page': item_bio_page,
+                       'pages':num_pages,
                        })
 
 
