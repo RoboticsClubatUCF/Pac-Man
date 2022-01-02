@@ -27,7 +27,6 @@ def search_inventory(request):
         results = results.order_by('name')  # the start of sorting hell
         num_results = results.count()
         num_pages = 1
-
         if (num_results > items_per_page):
             num_ = num_results
             while(num_ > items_per_page):
