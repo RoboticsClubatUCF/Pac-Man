@@ -29,10 +29,10 @@ class Location(Model):
     name = models.CharField(max_length=6, null=True, blank=True)
 
     def __str__(self):
-        return self.macro_location + str('0' + location_id_fix(self.macro_location_id)) + self.micro_location + str('0' + location_id_fix(self.micro_location_id))
+        return str(self.macro_location + str(location_id_fix(self.macro_location_id)) + self.micro_location + str(location_id_fix(self.micro_location_id)))
 
     def save(self, *args, **kwargs):
-        self.name = str(self.macro_location + str('0' + location_id_fix(self.macro_location_id)) + self.micro_location + str('0' + location_id_fix(self.micro_location_id)))
+        self.name = str(self.macro_location + str(location_id_fix(self.macro_location_id)) + self.micro_location + str(location_id_fix(self.micro_location_id)))
         super(Location, self).save(*args, **kwargs)
 
 
