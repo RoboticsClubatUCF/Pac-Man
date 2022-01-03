@@ -1,6 +1,4 @@
 from django.contrib import admin
-from django.contrib.admin.helpers import Fieldset
-from django.db import models
 from .models import Item,Location
 
 class LocationAdmin(admin.ModelAdmin):
