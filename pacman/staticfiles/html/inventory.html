@@ -143,13 +143,19 @@ input[type="radio"]:hover ~ .pacman:after {
 }
 {% for dot in pages %}
 	{% if forloop.counter == 1 %}
-		input[id="dot-1"]:checked
+		input[id="dot-1"]:hover{
+			padding:5px;
+		}
 	{% endif %}
 	{% if forloop.counter == 2 %}
-		input[id="dot-2"]:checked
+		input[id="dot-2"]:hover{
+			padding:5px;
+		}
 	{% endif %}
 	{% if forloop.counter > 2 %}
-		input[id="dot-{{forloop.counter}}"]:checked
+		input[id="dot-{{forloop.counter}}"]:hover{
+			padding:5px;
+		}
 	{% endif %}
 {% endfor %}
 </style>
