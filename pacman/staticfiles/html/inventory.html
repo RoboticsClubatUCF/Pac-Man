@@ -27,22 +27,40 @@
 		{% block content %}{% endblock %}
 	</div>
 </body>
-<div id="pages">
+<div class="pages">
 	<div class="pagination">
-		{% for dot in range(0,{{pages}}) %}
-		<input id="dot-{{dot}}" type="radio" name="dots" checked="checked">
-		<label for="dot-{{dot}}"></label>
-		{% endfor %}
-		<div class="pacman"></div>
+		{% if pages %}
+			{% for dot in pages %}
+				{% if forloop.counter0 == 0 %}
+				<input id="dot-{{forloop.counter}}" type="radio" name="dots" checked="checked">
+				{% else %}
+				<input id="dot-{{forloop.counter}}" type="radio" name="dots">
+				{% endif %}
+				<label for="dot-{{forloop.counter}}">|<p>{{forloop.counter}}</p></label>
+			{% endfor %}
+			<div class="pacman"></div>
+		{% endif %}
 	</div>
 </div>
-
+<script>
+	var pages = document.getElementsByName("dots");
+	for (let i = 0; i < pages.length; i++) {
+		pages[i].addEventListener("click",function(){loadPageX(i)});
+	}
+	function loadPageX(x){
+		var getUrl = window.location;
+		var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
+		location.assign(baseUrl + "/x/{{searched}}/" + x);
+	}
+</script>
 </html>
 <style>
-	.pages{
-  margin: auto;
-  margin-bottom: 20px;
-  justify-self: center;
+.pages{
+	position: absolute;
+	margin: auto;
+	left: 50%;
+	transform: translateX(-50%);
+	margin-top: 500px;
 }
 
 .pagination {
@@ -52,7 +70,7 @@
 	--ddim: 10px;
 	--rd: 15px;
 	--rdim: calc(var(--rd)*2);
-	--pm: #ffff03;
+	--pm: gold;
 }
 
 label {
@@ -61,7 +79,15 @@ label {
 	height: var(--ddim);
 	width: var(--ddim);
 	background: #f7b997;
+	color: #f2f2f2;
+}
+label:hover{
 	cursor: pointer;
+}
+label p{
+	font-size: 14pt;
+	color: #f2f2f2;
+	margin-top: -5px;
 }
 
 label:first-child {margin-left: 0;}
@@ -72,7 +98,7 @@ input {display: none;}
 	content: '';
 	position: absolute;
 	top: calc(-1*var(--ddim));
-	left: calc(-1*var(--ddim)/2);
+	left: calc((-1*var(--ddim)/2) - 15px);
 	height: var(--rdim);
 	width: var(--rdim);
 	transition: transform 250ms linear;
@@ -115,7 +141,15 @@ input[type="radio"]:hover ~ .pacman:before,
 input[type="radio"]:hover ~ .pacman:after {
 	animation: waka 500ms infinite;
 }
-{% for dot in range(0,{{pages}}) %}
-input[id="dot-{dot}"]:checked ~ .pacman {transform: translateX(calc(var(--ddim) + var(--rdim)*{{dot}} - 1));}
+{% for dot in pages %}
+	{% if forloop.counter == 1 %}
+		input[id="dot-1"]:checked
+	{% endif %}
+	{% if forloop.counter == 2 %}
+		input[id="dot-2"]:checked
+	{% endif %}
+	{% if forloop.counter > 2 %}
+		input[id="dot-{{forloop.counter}}"]:checked
+	{% endif %}
 {% endfor %}
 </style>

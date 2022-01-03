@@ -3,48 +3,59 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template.loader import get_template
 from .models import Item
+from pacman.settings import ITEMS_PER_PAGE
 # Create your views here.
 
 
 def home(request):
-    pages = 0
     return render(request, "inventory.html",
-                  {
-                      'pages': pages,
-                  })
+                  {})
 
 
-def search_inventory(request):
-    if request.method == "POST":
-        items_per_page = 1
-        searched = request.POST['Search']  # returns what they searched
-        names = Item.objects.filter(name__icontains=searched)
-        generals = Item.objects.filter(general_type__icontains=searched)
-        description = Item.objects.filter(description__icontains=searched)
-        location = Item.objects.filter(location__name__icontains=searched)
-        # [locations for items in names if str(items.location) == searched: locations= locations + items]
-        results = names | generals | description | location
-        results = results.order_by('name')  # the start of sorting hell
-        num_results = results.count()
-        num_pages = 1
-        if (num_results > items_per_page):
-            num_ = num_results
-            while(num_ > items_per_page):
-                num_pages+=1
-                num_ -= items_per_page
-        
-        item_bio_page = False
-        return render(request, 'search_inventory.html',
-                      {'searched': searched,
-                       'results': results,
-                       'num_results': num_results,
-                       'item_page': item_bio_page,
-                       'pages':num_pages,
-                       })
+def search_inventory(request, query=None, pageid=0):
+    items_per_page = ITEMS_PER_PAGE
+    searched = ""
+
+    if query:
+        searched = query
+    else:
+        searched = request.POST['Search']
+    names = Item.objects.filter(name__icontains=searched)
+    generals = Item.objects.filter(general_type__icontains=searched)
+    description = Item.objects.filter(description__icontains=searched)
+    location = Item.objects.filter(location__name__icontains=searched)
+
+    results = names | generals | description | location
+    results = results.order_by('name')
+    num_results = results.count()
+    num_pages = 1
+    if (num_results > items_per_page):
+        num_ = num_results
+        while(num_ > items_per_page):
+            num_pages += 1
+            num_ -= items_per_page
+    num_pages_ = range(0, num_pages)
+    from_ = 0
+    to_ = items_per_page
+    if pageid > 0:
+        from_ = pageid * items_per_page
+        to_ = (pageid + 1) * items_per_page
+        results = results[from_:to_]
+
+    else:
+        results = results.order_by("name")[:items_per_page]
+    item_bio_page = False
+    return render(request, 'search_inventory.html',
+                  {'searched': searched,
+                   'results': results,
+                   'num_results': num_results,
+                   'item_page': item_bio_page,
+                   'pages': num_pages_,
+                   })
 
 
 # TODO
-#  Get a top down view of the lab's floor plan
+#  Get a !UPDATED! top down view of the lab's floor plan
 
 
 def lab_location(request, item_id):
@@ -59,7 +70,7 @@ def lab_location(request, item_id):
                       'other_items': other_items,
                   })
 
-# this will be used when a floorplan of the room is created
+
 
 
 def items__at_location(request, location_tag):

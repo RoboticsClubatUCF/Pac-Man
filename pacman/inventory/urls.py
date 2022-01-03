@@ -9,9 +9,10 @@ admin.autodiscover()
 urlpatterns = [
 	path('', views.home, name='home'),
 	path('search_inventory', views.search_inventory, name='search-inventory'),
+	path('search_inventory/x/<str:query>/<int:pageid>', views.search_inventory, name='search-inventory2'),
 	path('location_map/<int:item_id>', views.lab_location, name='location'),
-	path('location_map/x/<str:location_tag>', views.items__at_location, name='items_location'),
-	path('search_inventory/<int:item_id>', views.item_page, name='item-page'),
-	
-] + static(MEDIA_URL,document_root=MEDIA_ROOT)
-urlpatterns +=  staticfiles_urlpatterns()
+	path('location_map/x/<str:location_tag>',views.items__at_location, name='items_location'),
+	path('items/<int:item_id>', views.item_page, name='item-page'),
+
+] + static(MEDIA_URL, document_root=MEDIA_ROOT)
+urlpatterns += staticfiles_urlpatterns()
