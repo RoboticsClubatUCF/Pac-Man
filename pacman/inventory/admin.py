@@ -10,9 +10,10 @@ class ItemAdmin(admin.ModelAdmin):
     fieldsets = [
         ('General Info',
         {
-            'fields': ['name','description','quantity']
+            'fields': ['name','description','condition','quantity']
         }
-        ),(
+        ),
+        (
             'Type & Location',{'fields':['general_type','location']}
         )
     ]

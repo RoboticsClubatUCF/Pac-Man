@@ -1,7 +1,4 @@
-from django.db.models.query import QuerySet
 from django.shortcuts import render
-from django.http import HttpResponse
-from django.template.loader import get_template
 from .models import Item
 from pacman.settings import ITEMS_PER_PAGE
 # Create your views here.

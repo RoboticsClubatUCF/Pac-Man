@@ -44,14 +44,22 @@ class Item(Model):
         ('Safety Equipment', 'SAFETY EQUIPMENT'),
         ('Power Tool', 'POWER TOOL'),
     ]
+    CONDITIONS = [
+        ('New', 'New'),
+        ('Excellent', 'Excellent'),
+        ('Fair', 'Fair'),
+        ('Poor', 'Poor'),
+        ('Obsolete', 'Obsolete'),
+        ('Cannibalized', 'Cannibalized'),
+    ]
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=128)
     description = models.TextField(max_length=2048, blank=True, null=True)
     quantity = models.PositiveIntegerField()
-    general_type = models.CharField(
-        blank=True, null=True, max_length=32, choices=GENERAL_TYPES)
+    general_type = models.CharField(blank=True, null=True, max_length=32, choices=GENERAL_TYPES)
+    condition = models.CharField(blank=True, null=True, max_length=32, choices=CONDITIONS)
     location = models.ForeignKey(Location, on_delete=models.CASCADE, blank=True,null=True, help_text="Location this item can be found at")
-    #image = models.CharField(max_length=2048,blank=True,null=True) # hopefully this is long enough to store any img url
+    image = models.CharField(max_length=2048,blank=True,null=True) # hopefully this is long enough to store any img url
 
     def __str__(self):
         return self.name + "  -  " + str(self.location)
