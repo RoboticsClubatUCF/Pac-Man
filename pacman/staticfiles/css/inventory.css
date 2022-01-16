@@ -25,7 +25,7 @@ a:hover {
   text-decoration: #f2f2f2;
   border-style: solid;
   border-radius: 7px;
-  border-width: 1px;
+  border-width: 2px;
   cursor: pointer;
 }
 
@@ -74,7 +74,9 @@ body {
   color: #ddd;
 }
 
-table, th, td {
+table,
+th,
+td {
   border: 1px solid #d9ad77;
   color: #ddd;
 }
@@ -147,4 +149,106 @@ input[type="submit"]:hover {
 
 th {
   cursor: pointer;
+}
+
+/* pages styling */
+.pages {
+  position: absolute;
+  margin: auto;
+  left: 50%;
+  transform: translateX(-50%);
+  padding-top: 60px;
+}
+
+.pagination {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  --ddim: 10px;
+  --rd: 15px;
+  --rdim: calc(var(--rd)*2);
+  --pm: gold;
+}
+
+label {
+  content: '';
+  margin: 0 10px;
+  height: var(--ddim);
+  width: var(--ddim);
+  background: #f7b997;
+  color: #f2f2f2;
+}
+
+label:hover {
+  cursor: pointer;
+}
+
+label p {
+  font-size: 14pt;
+  color: #f2f2f2;
+  margin-top: -5px;
+}
+
+label:first-child {
+  margin-left: 0;
+}
+
+label:last-child {
+  margin-right: 0;
+}
+
+input {
+  display: none;
+}
+
+.pacman {
+  content: '';
+  position: absolute;
+  top: calc(-1*var(--ddim));
+  left: calc((-1*var(--ddim)/2) - 30px);
+  height: var(--rdim);
+  width: var(--rdim);
+  transition: transform 250ms linear;
+}
+
+.pacman:before,
+.pacman:after {
+  content: '';
+  position: absolute;
+  height: var(--rd);
+  width: var(--rdim);
+  left: 0;
+  background: var(--pm);
+  transition: inherit;
+}
+
+.pacman:before {
+  top: 0;
+  border-top-left-radius: var(--rdim);
+  border-top-right-radius: var(--rdim);
+  transform-origin: bottom center;
+  transform: rotate(-45deg);
+}
+
+.pacman:after {
+  bottom: 0;
+  border-bottom-left-radius: var(--rdim);
+  border-bottom-right-radius: var(--rdim);
+  transform-origin: top center;
+  transform: rotate(45deg);
+}
+
+@keyframes waka {
+  0% {}
+
+  50% {
+    transform: rotate(0);
+  }
+
+  100% {}
+}
+
+input[type="radio"]:hover~.pacman:before,
+input[type="radio"]:hover~.pacman:after {
+  animation: waka 500ms infinite;
 }
