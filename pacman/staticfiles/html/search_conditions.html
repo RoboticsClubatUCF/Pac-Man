@@ -1,0 +1,93 @@
+{% extends 'inventory.html' %}
+{% load static %}
+{% block content %}
+{% get_static_prefix as STATIC_PREFIX %}
+<!-- idea is to list all items with a bad condition, and allow them to be handled -->
+<script src="{% static 'js/tableSort.js'%}"></script>
+<br style="margin-top: 100px;"/>
+<h3>Search Based on condition (independent of Main search)</h3>
+<label class="container">
+    Cannibalized
+    <input type="checkbox"
+    {% if s0 %}
+    checked = "checked"
+    {% endif %} %}
+    >
+    <span class="checkmark"></span>
+</label>
+<label class="container">
+    Obsolete
+    <input type="checkbox"
+    {% if s1 %}
+    checked = "checked"
+    {% endif %} %}
+    >
+    <span class="checkmark"></span>
+</label>
+<label class="container">
+    Poor
+    <input type="checkbox"
+    {% if s2 %}
+    checked = "checked"
+    {% endif %} %}
+    >
+    <span class="checkmark"></span>
+</label>
+<label class="container">
+    Fair
+    <input type="checkbox"
+    {% if s3 %}
+    checked = "checked"
+    {% endif %} %}
+    >
+    <span class="checkmark"></span>
+</label>
+<label class="container">
+    Excellent
+    <input type="checkbox"
+    {% if s4 %}
+    checked = "checked"
+    {% endif %} %}
+    >
+    <span class="checkmark"></span>
+</label>
+<label class="container">
+    New
+    <input type="checkbox"
+    {% if s5 %}
+    checked = "checked"
+    {% endif %} %}
+    >
+    <span class="checkmark"></span>
+</label>
+<center style="margin-top: 40px;">
+    <hr />
+    <br />
+    <div style="margin:auto;">
+        <table id="item_table" style="width: 100%;">
+            <tr class="top-row">
+                <th onclick="sortTable(0)">Name</th>
+                <th onclick="sortTable(1)">Description</th>
+                <th onclick="sortTable(2)">Location</th>
+                <th onclick="sortTable(3)">Condition</th>
+                <th onclick="sortTable(4)">Quantity</th>
+            </tr>
+
+            {% for Item in results %}
+            <tr>
+                <td style="text-align: center;"> <a href="/items/{{Item.id}}">{{ Item.name }}</a> </td>
+                <td>{% if Item.description|length > 24 and not item_page%}
+                    {{ Item.description|make_list|slice:':24'|join:'' }}...
+                    {% else %}
+                    {{Item.description}}
+                    {% endif %}
+                </td>
+                <td style="text-align: center;"> <a href="/location_map/{{Item.id}}"> {{ Item.location }} </a> </td>
+                <td style="text-align: center;">{{ Item.condition }}</td>
+                <td style="text-align: center;">{{ Item.quantity }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</center>
+{% endblock %}

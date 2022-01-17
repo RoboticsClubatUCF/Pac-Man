@@ -1,7 +1,19 @@
+import enum
+from operator import truediv
+import re
 from django.shortcuts import render
 from .models import Item
 from pacman.settings import ITEMS_PER_PAGE
 # Create your views here.
+
+
+class item_condition (enum.Enum):
+    Cannibalized = 0
+    Obsolete = 1
+    Poor = 2
+    Fair = 3
+    Excellent = 4
+    New = 5
 
 
 def home(request):
@@ -68,9 +80,7 @@ def lab_location(request, item_id):
                   })
 
 
-
-
-def items__at_location(request, location_tag):
+def items_at_location(request, location_tag):
     location_dir = str(location_tag)
     other_items = Item.objects.filter(location__name__icontains=location_dir)
     return render(request, 'items_at_locations.html',
@@ -88,4 +98,67 @@ def item_page(request, item_id):
                       'searched': searched_item.first().name,
                       'results': searched_item,
                       'item_page': item_bio_page,
+                  })
+
+
+def items_with_condition(request, c):
+    # c is the condition state
+    # 0 is Cannibalized
+    # 1 is Obsolete
+    # 2 is Poor
+    # 3 is Fair
+    # 4 is Excellent
+    # 5 is New
+
+
+    # Error Found : 
+    #   if c = any int starting with '0' it will not be handled
+
+    # C can be a number > 5 to combine searches
+    # example :
+    #   012 / 120 / 201 Etc,
+    #   this string of nums should give results for any item that is
+    #   Cannibalized or Obsolete or Poor
+    #   This should be handled by checking if C is > 5
+    # There will be no pagination for this,
+    #    because the number of items in this state should be minimal
+    result = Item.objects.none()  # this is for initial Declaration
+    #init declaration : 
+    s0 = False
+    s1 = False
+    s2 = False
+    s3 = False
+    s4 = False
+    s5 = False
+    if (c > 5):
+        query = str(c)
+        for search in query:
+            if int(search) == 0:
+                s0 = True
+            elif int(search) == 1:
+                s1 = True
+            elif int(search) == 2:
+                s2 = True
+            elif int(search) == 3:
+                s3 = True
+            elif int(search) == 4:
+                s4 = True
+            elif int(search) == 5:
+                s5 = True
+            result = result | Item.objects.filter(
+                condition__icontains=item_condition(int(search)).name)
+            
+
+    else:
+        result = Item.objects.filter(
+            condition__icontains=item_condition(int(c)).name)
+    return render(request, 'search_conditions.html',
+                  {
+                      'results': result,
+                      's0': s0,
+                      's1': s1,
+                      's2': s2,
+                      's3': s3,
+                      's4': s4,
+                      's5': s5,
                   })
