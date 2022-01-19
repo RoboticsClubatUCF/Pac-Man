@@ -110,9 +110,9 @@ def items_with_condition(request, c):
     # 4 is Excellent
     # 5 is New
 
-
-    # Error Found : 
+    # Error Found :
     #   if c = any int starting with '0' it will not be handled
+    #       
 
     # C can be a number > 5 to combine searches
     # example :
@@ -123,14 +123,14 @@ def items_with_condition(request, c):
     # There will be no pagination for this,
     #    because the number of items in this state should be minimal
     result = Item.objects.none()  # this is for initial Declaration
-    #init declaration : 
+    # init declaration :
     s0 = False
     s1 = False
     s2 = False
     s3 = False
     s4 = False
     s5 = False
-    if (c > 5):
+    if (c > 5 or not str(c).__len__.__eq__(0)):
         query = str(c)
         for search in query:
             if int(search) == 0:
@@ -147,9 +147,19 @@ def items_with_condition(request, c):
                 s5 = True
             result = result | Item.objects.filter(
                 condition__icontains=item_condition(int(search)).name)
-            
-
     else:
+        if int(c) == 0:
+            s0 = True
+        elif int(c) == 1:
+            s1 = True
+        elif int(c) == 2:
+            s2 = True
+        elif int(c) == 3:
+            s3 = True
+        elif int(c) == 4:
+            s4 = True
+        elif int(c) == 5:
+            s5 = True
         result = Item.objects.filter(
             condition__icontains=item_condition(int(c)).name)
     return render(request, 'search_conditions.html',

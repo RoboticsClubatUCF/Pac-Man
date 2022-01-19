@@ -4,62 +4,66 @@
 {% get_static_prefix as STATIC_PREFIX %}
 <!-- idea is to list all items with a bad condition, and allow them to be handled -->
 <script src="{% static 'js/tableSort.js'%}"></script>
-<br style="margin-top: 100px;"/>
-<h3>Search Based on condition (independent of Main search)</h3>
-<label class="container">
+<h3 style="margin-top: 100px;">Search Based on condition (independent of Main search)</h3>
+<div style="margin-bottom: -300px;">
+    {% csrf_token %}
+    <label class="container">
     Cannibalized
-    <input type="checkbox"
-    {% if s0 %}
-    checked = "checked"
-    {% endif %} %}
-    >
-    <span class="checkmark"></span>
-</label>
-<label class="container">
-    Obsolete
-    <input type="checkbox"
-    {% if s1 %}
-    checked = "checked"
-    {% endif %} %}
-    >
-    <span class="checkmark"></span>
-</label>
-<label class="container">
-    Poor
-    <input type="checkbox"
-    {% if s2 %}
-    checked = "checked"
-    {% endif %} %}
-    >
-    <span class="checkmark"></span>
-</label>
-<label class="container">
-    Fair
-    <input type="checkbox"
-    {% if s3 %}
-    checked = "checked"
-    {% endif %} %}
-    >
-    <span class="checkmark"></span>
-</label>
-<label class="container">
-    Excellent
-    <input type="checkbox"
-    {% if s4 %}
-    checked = "checked"
-    {% endif %} %}
-    >
-    <span class="checkmark"></span>
-</label>
-<label class="container">
-    New
-    <input type="checkbox"
-    {% if s5 %}
-    checked = "checked"
-    {% endif %} %}
-    >
-    <span class="checkmark"></span>
-</label>
+        <input class="checkbox_outer" type="checkbox" 
+        {% if s0 %} 
+        checked="checked"
+        {% endif %} %}
+        >
+        <span class="checkmark"></span>
+    </label>
+    <label class="container">
+        Obsolete
+        <input class="checkbox_outer" type="checkbox" 
+        {% if s1 %} 
+        checked="checked" 
+        {% endif %} %}
+        >
+        <span class="checkmark"></span>
+    </label>
+    <label class="container">
+        Poor
+        <input class="checkbox_outer" type="checkbox" 
+        {% if s2 %} 
+        checked="checked" 
+        {% endif %} %}
+        >
+        <span class="checkmark"></span>
+    </label>
+    <label class="container">
+        Fair
+        <input class="checkbox_outer" type="checkbox" 
+        {% if s3 %} 
+        checked="checked" 
+        {% endif %} %}
+        >
+        <span class="checkmark"></span>
+    </label>
+    <label class="container">
+        Excellent
+        <input class="checkbox_outer" type="checkbox" 
+        {% if s4 %} 
+        checked="checked" 
+        {% endif %} %}
+        >
+        <span class="checkmark"></span>
+    </label>
+    <label class="container">
+        New
+        <input class="checkbox_outer" type="checkbox" 
+        {% if s5 %} 
+        checked="checked" 
+        {% endif %} %}
+        >
+        <span class="checkmark"></span>
+    </label>
+    <button style="margin-top:300px;" id="condtion_submit" value="Rechercher" type="submit" ></button>
+</div>
+
 <center style="margin-top: 40px;">
     <hr />
     <br />
@@ -90,4 +94,29 @@
         </table>
     </div>
 </center>
+
+<script>
+    function AdjustButtonAction() {
+        var button = document.getElementById("condtion_submit");
+        var searchstring = "";
+        var labels = document.getElementsByClassName("checkbox_outer");
+        for (let i = 0; i < labels.length; i++) {
+            if (labels[i].checked) {
+                searchstring += i.toString();
+            }
+        }
+        if (searchstring.length > 1 ) { // swaps first and last bit in case first is 0
+            searchstring = searchstring.substring(1,searchstring.length) + searchstring[0];
+        }
+        loadPageStr(searchstring);
+    }
+    function setup() {
+        document.getElementById("condtion_submit").addEventListener("click",function(){AdjustButtonAction()});
+    }
+    function loadPageStr(str){
+        var baseUrl = window.location.href.substring(0,window.location.href.lastIndexOf('/'));
+		location.href = baseUrl + "/" + str;
+	}
+    window.onload += setup();
+</script>
 {% endblock %}
