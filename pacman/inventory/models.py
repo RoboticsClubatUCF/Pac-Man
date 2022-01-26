@@ -28,13 +28,21 @@ class Location(Model):
     micro_location_id = models.PositiveIntegerField(null=True, blank=True)
     name = models.CharField(max_length=6, null=True, blank=True)
 
-    def __str__(self):
-        return str(self.macro_location + str(location_id_fix(self.macro_location_id)) + self.micro_location + str(location_id_fix(self.micro_location_id)))
 
     def save(self, *args, **kwargs):
-        self.name = str(self.macro_location + str(location_id_fix(self.macro_location_id)) + self.micro_location + str(location_id_fix(self.micro_location_id)))
+        #self.name = str(self.macro_location + str(location_id_fix(self.macro_location_id)) + self.micro_location + str(location_id_fix(self.micro_location_id)))
+        #check to see if the user wants to input a table
+        #   tables do not have shelves, and thus the user is
+        #   unlikely to use T1S0, and instread type T1, and leave the rest blank
+        if str(self.macro_location) == 'T':
+            self.name = str(self.macro_location) + str(location_id_fix(self.macro_location_id))
+            if self.micro_location == 'U':
+                self.name += str(self.micro_location)
         super(Location, self).save(*args, **kwargs)
 
+
+    def __str__(self):
+        return self.name
 
 class Item(Model):
     GENERAL_TYPES = [
