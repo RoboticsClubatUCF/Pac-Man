@@ -1,11 +1,10 @@
 import enum
 from operator import truediv
-import re
+from turtle import begin_fill
 from django.shortcuts import render
 from .models import Item
 from pacman.settings import ITEMS_PER_PAGE
 # Create your views here.
-
 
 class item_condition (enum.Enum):
     Cannibalized = 0
@@ -69,6 +68,7 @@ def search_inventory(request, query=None, pageid=0):
 
 def lab_location(request, item_id):
     searched_item = Item.objects.filter(id__contains=item_id).first()
+    full_loc = str(searched_item.location)
     location_dir = str(searched_item.location)[:2]
     other_items = Item.objects.filter(
         location__name__icontains=searched_item.location)
@@ -76,6 +76,7 @@ def lab_location(request, item_id):
                   {
                       'searched': searched_item,
                       'dir_loc': location_dir,
+                      'full_loc': full_loc,
                       'other_items': other_items,
                   })
 
@@ -101,7 +102,7 @@ def item_page(request, item_id):
                   })
 
 
-def items_with_condition(request, c):
+def items_with_condition(request, c = 123450):
     # c is the condition state
     # 0 is Cannibalized
     # 1 is Obsolete
@@ -109,7 +110,6 @@ def items_with_condition(request, c):
     # 3 is Fair
     # 4 is Excellent
     # 5 is New
-
     # Error Found :
     #   if c = any int starting with '0' it will not be handled
     #       
