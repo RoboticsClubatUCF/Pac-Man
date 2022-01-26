@@ -12,18 +12,18 @@
 	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@200&display=swap" rel="stylesheet" />
 </head>
 <nav class="search-displace">
-	<h1 class="title">Inventory @ RCCF</h1>
+	<h1 class="title"> Inventory @ RCCF</h1>
 	<div id="wrap">
 		<form method="post" action="{% url 'search-inventory' %}" autocomplete="on">
 			{% csrf_token %}
 			<input id="search" name="Search" type="text" placeholder="I'm Looking for . . .">
 			<input id="search_submit" value="Rechercher" type="submit">
 		</form>
-		<div class="footer" style="float: right; margin-top: 80px;">
-			<a href="./condition/">Want to search by Condtion?</a>
-		</div>
 	</div>
 </nav>
+<div class="footer" style="float: right; margin:auto; margin-top: 80px;">
+	<a href="./condition/">Want to search by Condtion?</a>
+</div>
 
 <body>
 	<div class="searchresults">
@@ -48,6 +48,7 @@
 </div>
 <script>
 	var pages = document.getElementsByName("dots");
+	document.getElementsByClassName("title")[0].addEventListener("click",function(){location.assign(window.location.origin);});
 	for (let i = 0; i < pages.length; i++) {
 		pages[i].addEventListener("click",function(){loadPageX(i)});
 	}

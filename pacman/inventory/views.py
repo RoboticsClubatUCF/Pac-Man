@@ -1,6 +1,4 @@
 import enum
-from operator import truediv
-from turtle import begin_fill
 from django.shortcuts import render
 from .models import Item
 from pacman.settings import ITEMS_PER_PAGE
