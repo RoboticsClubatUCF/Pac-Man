@@ -19,10 +19,12 @@ a {
 h1 {
   color: #d3d3d3;
 }
-h3{
+
+h3 {
   color: #d3d3d3;
 }
-.footer{
+
+.footer {
   position: fixed;
   bottom: 0;
   width: 100%;
@@ -30,6 +32,7 @@ h3{
   text-align: center;
   justify-content: center;
 }
+
 a:hover {
   color: #f2f2f2;
   text-decoration: #f2f2f2;
@@ -62,9 +65,10 @@ a:active {
 
 .title {
   color: #F2C572;
-  cursor: pointer;  
+  cursor: pointer;
 }
-.title:hover{
+
+.title:hover {
   color: #f3d398;
 }
 
@@ -155,6 +159,7 @@ input[type="text"]:focus {
   opacity: 0.4;
   transition: opacity .4s ease;
 }
+
 #condtion_submit {
   height: 67px;
   width: 63px;
@@ -176,6 +181,7 @@ input[type="text"]:focus {
 #condtion_submit:hover {
   opacity: 0.8;
 }
+
 #search_submit:hover {
   opacity: 0.8;
 }
@@ -324,12 +330,12 @@ input[type="radio"]:hover~.pacman:after {
 }
 
 /* On mouse-over*/
-.container:hover input ~ .checkmark {
+.container:hover input~.checkmark {
   background-color: #d9ad77;
 }
 
 /* When the checkbox is checked */
-.container input:checked ~ .checkmark {
+.container input:checked~.checkmark {
   background-color: #F2C572;
 }
 
@@ -341,7 +347,7 @@ input[type="radio"]:hover~.pacman:after {
 }
 
 /* Show the checkmark when checked */
-.container input:checked ~ .checkmark:after {
+.container input:checked~.checkmark:after {
   display: block;
 }
 
