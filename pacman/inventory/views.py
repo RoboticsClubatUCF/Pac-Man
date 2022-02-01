@@ -30,8 +30,10 @@ def search_inventory(request, query=None, pageid=0):
     generals = Item.objects.filter(general_type__icontains=searched)
     description = Item.objects.filter(description__icontains=searched)
     location = Item.objects.filter(location__name__icontains=searched)
+    barcode = Item.objects.filter(barcode_id__icontains=searched)
 
-    results = names | generals | description | location
+
+    results = names | generals | description | location | barcode
     results = results.order_by('name')
     num_results = results.count()
     num_pages = 1
