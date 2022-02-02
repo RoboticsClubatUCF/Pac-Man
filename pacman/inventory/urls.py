@@ -14,7 +14,8 @@ urlpatterns = [
 	path('location_map/x/<str:location_tag>',views.items_at_location, name='items_location'), # for when someone click on the location map, and wants to know what is there
 	path('items/<int:item_id>', views.item_page, name='item-page'),
 	path('condition/<int:c>',views.items_with_condition, name="items_condtions_list"),
-	path('condition/',views.items_with_condition, name="items_condtions_list")
+	path('condition/',views.items_with_condition, name="items_condtions_list"),
+	path("value",views.search_ByValue,name="Items_Value_List")
 
 ] + static(MEDIA_URL, document_root=MEDIA_ROOT)
 urlpatterns += staticfiles_urlpatterns()

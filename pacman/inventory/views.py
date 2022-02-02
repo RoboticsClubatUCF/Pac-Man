@@ -1,4 +1,5 @@
 import enum
+from types import NoneType
 from django.shortcuts import render
 from .models import Item
 from pacman.settings import ITEMS_PER_PAGE
@@ -172,3 +173,11 @@ def items_with_condition(request, c = 123450):
                       's4': s4,
                       's5': s5,
                   })
+def search_ByValue(request):
+    value = 0
+    for i in Item.objects.all():
+        if i.est_value is not None:
+            value += float(i.est_value)
+    return render(request,"search_value.html",{
+        'value':value
+    })
