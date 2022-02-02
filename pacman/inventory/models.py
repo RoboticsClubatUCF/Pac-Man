@@ -40,6 +40,8 @@ class Location(Model):
             self.name = str(self.macro_location) + str(location_id_fix(self.macro_location_id))
             if self.micro_location == 'U':
                 self.name += str(self.micro_location)
+        else:
+            self.name = str(self.macro_location + str(location_id_fix(self.macro_location_id)) + self.micro_location + str(location_id_fix(self.micro_location_id)))
         super(Location, self).save(*args, **kwargs)
 
 
@@ -67,6 +69,12 @@ class Item(Model):
     description = models.TextField(max_length=2048, blank=True, null=True)
 
     barcode_id = models.CharField(max_length=50,blank=True,null=True)
+    # These are all barcodes that we want to be added to the system,
+    #       all should be like the current barcode_id field
+    # RCCF Barcode
+    # UCF Barcode
+    # Sale Barcode
+
 
     quantity = models.PositiveIntegerField()
     general_type = models.CharField(blank=True, null=True, max_length=32, choices=GENERAL_TYPES)

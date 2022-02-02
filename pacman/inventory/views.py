@@ -1,5 +1,4 @@
 import enum
-from types import NoneType
 from django.shortcuts import render
 from .models import Item
 from pacman.settings import ITEMS_PER_PAGE
