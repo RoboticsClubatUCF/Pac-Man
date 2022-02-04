@@ -30,10 +30,13 @@ def search_inventory(request, query=None, pageid=0):
     generals = Item.objects.filter(general_type__icontains=searched)
     description = Item.objects.filter(description__icontains=searched)
     location = Item.objects.filter(location__name__icontains=searched)
-    barcode = Item.objects.filter(barcode_id__icontains=searched)
+
+    rccf_bar = Item.objects.filter(rccf_barcode__icontains=searched)
+    ucf_bar = Item.objects.filter(ucf_barcode__icontains=searched)
+    sale_bar= Item.objects.filter(sale_barcode__icontains=searched)
 
 
-    results = names | generals | description | location | barcode
+    results = names | generals | description | location | rccf_bar | ucf_bar | sale_bar
     results = results.order_by('name')
     num_results = results.count()
     num_pages = 1
@@ -62,8 +65,6 @@ def search_inventory(request, query=None, pageid=0):
                    })
 
 
-# TODO
-#  Get a !UPDATED! top down view of the lab's floor plan
 
 
 def lab_location(request, item_id):
@@ -93,12 +94,10 @@ def items_at_location(request, location_tag):
 
 def item_page(request, item_id):
     searched_item = Item.objects.filter(id__icontains=item_id)
-    item_bio_page = True
-    return render(request, 'search_inventory.html',  # swap Search_inventory.html to a new page
+    return render(request, 'item_profile.html',  # swap Search_inventory.html to a new page
                   {
-                      'searched': searched_item.first().name,
-                      'results': searched_item,
-                      'item_page': item_bio_page,
+                      'item_name': searched_item.first().name,
+                      'item': searched_item.first(),
                   })
 
 

@@ -19,9 +19,13 @@ TYPE & LOCATION
     location
 
 MISC
-    barcode_id
     est_value
     image
+
+BARCODE
+    rccf_barcode
+    ucf_barcode
+    sale_barcode
 """
 
 
@@ -41,7 +45,12 @@ class ItemAdmin(admin.ModelAdmin):
          ),
          ('Misc',
              {
-                 'fields': ['est_value','barcode_id']
+                 'fields': ['est_value','image']
+             }
+         ),
+         ('Barcodes',
+             {
+                 'fields': ['rccf_barcode','ucf_barcode','sale_barcode']
              }
          )
     ]

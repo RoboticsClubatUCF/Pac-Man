@@ -15,9 +15,6 @@
                 <th onclick="sortTable(2)">Location</th>
                 <th onclick="sortTable(3)">Condition</th>
                 <th onclick="sortTable(4)">Quantity</th>
-                {% if item_page == True %}
-                <th onclick="sortTable(5)">Barcode ID</th>
-                {% endif %}
             </tr>
             {% for Item in results %}
             <tr>
@@ -31,9 +28,6 @@
                 <td style="text-align: center;"> <a href="/location_map/{{Item.id}}"> {{ Item.location }} </a> </td>
                 <td style="text-align: center;">{{ Item.condition }}</td>
                 <td style="text-align: center;">{{ Item.quantity }}</td>
-                {% if item_page == True %}
-                <td style="text-align: center;">{{ Item.barcode_id }}</td>
-                {% endif %}
             </tr>
             {% endfor %}
         </table>

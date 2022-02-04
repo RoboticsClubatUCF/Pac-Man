@@ -1,5 +1,3 @@
-from operator import truediv
-from re import T
 from django.db import models
 from django.db.models.base import Model
 # Create your models here.
@@ -68,20 +66,26 @@ class Item(Model):
     name = models.CharField(max_length=128)
     description = models.TextField(max_length=2048, blank=True, null=True)
 
-    barcode_id = models.CharField(max_length=50,blank=True,null=True)
+    #barcode_id = models.CharField(max_length=50,blank=True,null=True)
     # These are all barcodes that we want to be added to the system,
     #       all should be like the current barcode_id field
     # RCCF Barcode
     # UCF Barcode
     # Sale Barcode
 
+    # Barcode Fields : 
+
+    rccf_barcode = models.CharField(max_length=50,blank=True,null=True, help_text="If the item has a barcode associated with RCCF, enter it here")
+    ucf_barcode = models.CharField(max_length=50,blank=True,null=True,help_text="if the item has a surplus, or UCF tag associated with it, enter it here")
+    sale_barcode = models.CharField(max_length=50,blank=True,null=True,help_text="if the item has a barcode associated with it's sale, enter it here")
+
 
     quantity = models.PositiveIntegerField()
     general_type = models.CharField(blank=True, null=True, max_length=32, choices=GENERAL_TYPES)
     condition = models.CharField(blank=True, null=True, max_length=32, choices=CONDITIONS)
-    location = models.ForeignKey(Location, on_delete=models.CASCADE, blank=True,null=True, help_text="Location this item can be found at")
-    #image = models.CharField(max_length=2048,blank=True,null=True) # hopefully this is long enough to store any img url
-    est_value = models.FloatField(blank=True,null=True) # store the "estimated value" of the item
+    location = models.ForeignKey(Location, on_delete=models.CASCADE, blank=True,null=True, help_text="Location this item")
+    image = models.CharField(max_length=2048,blank=True,null=True,help_text="enter the URL of the image that represents this item") # hopefully this is long enough to store any img url
+    est_value = models.FloatField(blank=True,null=True,help_text="the MSRP or current estimated value of the item") # store the "estimated value" of the item
 
     def __str__(self):
         return self.name + "  -  " + str(self.location)
