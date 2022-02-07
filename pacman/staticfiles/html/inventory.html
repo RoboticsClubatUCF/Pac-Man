@@ -9,10 +9,11 @@
 	<script src="https://kit.fontawesome.com/afd6aa68df.js" crossorigin="anonymous"></script>
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link rel="shortcut icon" href="{% static 'img/Pacman.ico'%}" type="image/x-icon">
 	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@200&display=swap" rel="stylesheet" />
 </head>
 <nav class="search-displace">
-	<h1 class="title">Inventory @ Robotics Club</h1>
+	<h1 class="title"> Inventory @ RCCF</h1>
 	<div id="wrap">
 		<form method="post" action="{% url 'search-inventory' %}" autocomplete="on">
 			{% csrf_token %}
@@ -21,6 +22,11 @@
 		</form>
 	</div>
 </nav>
+<div style="margin:auto; margin-top: 90px; position: absolute;right: 0;">
+	<a href="./condition/">Want to search by Condtion?</a>
+	<br />
+	<a href="./value">Check out Our Lab's (estimated) Worth!</a>
+</div>
 
 <body>
 	<div class="searchresults">
@@ -41,121 +47,18 @@
 			<div class="pacman"></div>
 		{% endif %}
 	</div>
+
 </div>
 <script>
 	var pages = document.getElementsByName("dots");
+	document.getElementsByClassName("title")[0].addEventListener("click",function(){location.assign(window.location.origin);});
 	for (let i = 0; i < pages.length; i++) {
 		pages[i].addEventListener("click",function(){loadPageX(i)});
 	}
 	function loadPageX(x){
 		var getUrl = window.location;
-		var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
+		var baseUrl = getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
 		location.assign(baseUrl + "/x/{{searched}}/" + x);
 	}
 </script>
 </html>
-<style>
-.pages{
-	position: absolute;
-	margin: auto;
-	left: 50%;
-	transform: translateX(-50%);
-	margin-top: 500px;
-}
-
-.pagination {
-	position: relative;
-	display: flex;
-	flex-direction: row;
-	--ddim: 10px;
-	--rd: 15px;
-	--rdim: calc(var(--rd)*2);
-	--pm: gold;
-}
-
-label {
-	content: '';
-	margin: 0 10px;
-	height: var(--ddim);
-	width: var(--ddim);
-	background: #f7b997;
-	color: #f2f2f2;
-}
-label:hover{
-	cursor: pointer;
-}
-label p{
-	font-size: 14pt;
-	color: #f2f2f2;
-	margin-top: -5px;
-}
-
-label:first-child {margin-left: 0;}
-label:last-child {margin-right: 0;}
-input {display: none;}
-
-.pacman {
-	content: '';
-	position: absolute;
-	top: calc(-1*var(--ddim));
-	left: calc((-1*var(--ddim)/2) - 15px);
-	height: var(--rdim);
-	width: var(--rdim);
-	transition: transform 250ms linear;
-}
-
-.pacman:before,
-.pacman:after {
-	content: '';
-	position: absolute;
-	height: var(--rd);
-	width: var(--rdim);
-	left: 0;
-	background: var(--pm);
-	transition: inherit;
-}
-
-.pacman:before {
-	top: 0;
-	border-top-left-radius: var(--rdim);
-	border-top-right-radius: var(--rdim);
-	transform-origin: bottom center;
-	transform: rotate(-45deg);
-}
-
-.pacman:after {
-	bottom: 0;
-	border-bottom-left-radius: var(--rdim);
-	border-bottom-right-radius: var(--rdim);
-	transform-origin: top center;
-	transform: rotate(45deg);
-}
-
-@keyframes waka {
-	0% {}
-	50% {transform: rotate(0);}
-	100% {}
-}
-
-input[type="radio"]:hover ~ .pacman:before,
-input[type="radio"]:hover ~ .pacman:after {
-	animation: waka 500ms infinite;
-}
-{% for dot in pages %}
-	{% if forloop.counter == 1 %}
-		input[id="dot-1"]:checked{
-			padding:5px;
-		}
-	{% endif %}
-	{% if forloop.counter == 2 %}
-		input[id="dot-2"]:checked{
-			padding:5px;
-		}
-	{% endif %}
-	{% if forloop.counter > 2 %}
-		input[id="dot-{{forloop.counter}}"]:checked{
-			padding:5px;
-		}
-	{% endif %}
-{% endfor %}
-</style>

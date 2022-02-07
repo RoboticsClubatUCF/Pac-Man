@@ -1,0 +1,122 @@
+{% extends 'inventory.html' %}
+{% load static %}
+{% block content %}
+{% get_static_prefix as STATIC_PREFIX %}
+<!-- idea is to list all items with a bad condition, and allow them to be handled -->
+<script src="{% static 'js/tableSort.js'%}"></script>
+<h3 style="margin-top: 100px;">Search Based on condition (independent of Main search)</h3>
+<div style="margin-bottom: -300px;">
+    {% csrf_token %}
+    <label class="container">
+    Cannibalized
+        <input class="checkbox_outer" type="checkbox" 
+        {% if s0 %} 
+        checked="checked"
+        {% endif %} %}
+        >
+        <span class="checkmark"></span>
+    </label>
+    <label class="container">
+        Obsolete
+        <input class="checkbox_outer" type="checkbox" 
+        {% if s1 %} 
+        checked="checked" 
+        {% endif %} %}
+        >
+        <span class="checkmark"></span>
+    </label>
+    <label class="container">
+        Poor
+        <input class="checkbox_outer" type="checkbox" 
+        {% if s2 %} 
+        checked="checked" 
+        {% endif %} %}
+        >
+        <span class="checkmark"></span>
+    </label>
+    <label class="container">
+        Fair
+        <input class="checkbox_outer" type="checkbox" 
+        {% if s3 %} 
+        checked="checked" 
+        {% endif %} %}
+        >
+        <span class="checkmark"></span>
+    </label>
+    <label class="container">
+        Excellent
+        <input class="checkbox_outer" type="checkbox" 
+        {% if s4 %} 
+        checked="checked" 
+        {% endif %} %}
+        >
+        <span class="checkmark"></span>
+    </label>
+    <label class="container">
+        New
+        <input class="checkbox_outer" type="checkbox" 
+        {% if s5 %} 
+        checked="checked" 
+        {% endif %} %}
+        >
+        <span class="checkmark"></span>
+    </label>
+    <button style="margin-top:300px;" id="condtion_submit" value="Rechercher" type="submit" ></button>
+</div>
+
+<center style="margin-top: 40px;">
+    <hr />
+    <br />
+    <div style="margin:auto;">
+        <table id="item_table" style="width: 100%;">
+            <tr class="top-row">
+                <th onclick="sortTable(0)">Name</th>
+                <th onclick="sortTable(1)">Description</th>
+                <th onclick="sortTable(2)">Location</th>
+                <th onclick="sortTable(3)">Condition</th>
+                <th onclick="sortTable(4)">Quantity</th>
+            </tr>
+
+            {% for Item in results %}
+            <tr>
+                <td style="text-align: center;"> <a href="/items/{{Item.id}}">{{ Item.name }}</a> </td>
+                <td>{% if Item.description|length > 24 and not item_page%}
+                    {{ Item.description|make_list|slice:':24'|join:'' }}...
+                    {% else %}
+                    {{Item.description}}
+                    {% endif %}
+                </td>
+                <td style="text-align: center;"> <a href="/location_map/{{Item.id}}"> {{ Item.location }} </a> </td>
+                <td style="text-align: center;">{{ Item.condition }}</td>
+                <td style="text-align: center;">{{ Item.quantity }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</center>
+
+<script>
+    function AdjustButtonAction() {
+        var button = document.getElementById("condtion_submit");
+        var searchstring = "";
+        var labels = document.getElementsByClassName("checkbox_outer");
+        for (let i = 0; i < labels.length; i++) {
+            if (labels[i].checked) {
+                searchstring += i.toString();
+            }
+        }
+        if (searchstring.length > 1 ) { // swaps first and last bit in case first is 0
+            searchstring = searchstring.substring(1,searchstring.length) + searchstring[0];
+        }
+        loadPageStr(searchstring);
+    }
+    function setup() {
+        document.getElementById("condtion_submit").addEventListener("click",function(){AdjustButtonAction()});
+    }
+    function loadPageStr(str){
+        var baseUrl = window.location.href.substring(0,window.location.href.lastIndexOf('/'));
+		location.href = baseUrl + "/" + str;
+	}
+    window.onload += setup();
+</script>
+{% endblock %}

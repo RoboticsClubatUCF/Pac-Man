@@ -4,9 +4,19 @@
 {% get_static_prefix as STATIC_PREFIX %}
 <div style="margin-top: 100px;">
     <hr />
-    <h1 style="text-align: center; font-size: 32; font-weight: 900;">"{{ searched.name }}" can be found :</h1>
+    <h1 style="text-align: center; font-size: 32; font-weight: 900;">"{{ searched.name }}" can be found at : {{full_loc}}</h1>
     <hr />
-    <img class="location_img" src="{{ STATIC_PREFIX }}img/lab_locations/{{dir_loc}}.png" alt="">
+
+    <!-- Show where the Item is-->
+    <!-- Current Ideas : 
+        PIXIJS to render out an image using a sprite and an absolute position
+        A whole bunch of images
+        Python, create the image on request, then render it
+        Gurrent goal is to use {{Dir_Loc}} to get the location type we want
+    -->
+    <img class="location_img" src="{{ STATIC_PREFIX }}img/lab_locations/Lab_Layout.jpg" alt="">
+
+    <!-- End Block -->
     <div style="margin-top: 150px; margin: auto; width: 60%; display: block;text-align: center;">
         <hr />
         <h1 style="text-align: center;font-size: 14;">Scroll Down for More</h1>
