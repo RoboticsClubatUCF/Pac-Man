@@ -2,7 +2,7 @@
 {% block content %}
 {% load static %}
 {% get_static_prefix as STATIC_PREFIX %}
-<div style="margin-top: 100px;">
+<div >
     <hr />
     <img class="location_img" src="{{ STATIC_PREFIX }}img/lab_locations/{{dir_loc}}.png" alt="">
     <hr />
@@ -17,7 +17,7 @@
             </tr>
             {% for Item in other_items %}
             <tr>
-                <td> <a href="/search_inventory/{{Item.id}}">{{ Item.name }}</a> </td>
+                <td> <a href="/items/{{Item.id}}">{{ Item.name }}</a> </td>
                 <td>{% if Item.description|length > 24 and not item_page%}
                     {{ Item.description|make_list|slice:':24'|join:'' }}...
                     {% else %}

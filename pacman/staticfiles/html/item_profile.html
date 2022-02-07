@@ -1,0 +1,101 @@
+{% extends 'inventory.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/item_profile.css'%}">
+<!--allows for procedural barcode creation-->
+<div class="item_container">
+
+    <div class="item_title" style="font-size: 20px;">
+        <h1>{{item_name}}</h1>
+    </div>
+    <div id="container">
+        <div class="left">
+
+
+            <div class="item_title">
+                <h1>Description</h1>
+            </div>
+            {% if item.description|length < 2 %}
+            <p><span style="color:yellow"> Warning! </span> this item has no description!</p>
+            {% else %}
+            <p>{{item.description}}</p>
+            {% endif %}
+
+
+            <div class="item_title">
+                <h1>Quantity</h1>
+            </div>
+            <center>{{item.quantity}}</center>
+
+
+            <div class="item_title">
+                <h1>Location</h1>
+            </div>
+            <center><a href="/location_map/{{item.id}}">{{item.location}}</a></center>
+
+
+            <div class="item_title">
+                <h1>Condition</h1>
+            </div>
+            <center>{{item.condition}}</center>
+
+            <div class="item_title">
+                <h1>General Type</h1>
+            </div>
+            <center>{{item.general_type}}</center>
+
+            <div class="item_title">
+                <h1>Value</h1>
+            </div>
+            {% if item.est_value == None %}
+            <p><span style="color:yellow"> Warning! </span> this item has no reported value!</p>
+            {% else %}
+            <p>${{item.est_value}}</p>
+            {% endif %}
+
+            <div class="item_title">
+                <h1>Database ID</h1>
+            </div>
+            <center>{{item.id}}</center>
+
+
+            <div class="item_title">
+                <h1>RCCF Barcode</h1>
+            </div>
+            {% if item.rccf_barcode == None %}
+            <p><span style="color:yellow"> Warning! </span> this item has no RCCF Barcode!</p>
+            {% else %}
+            <p>{{item.rccf_barcode}}</p>
+            {% endif %}
+            <div class="item_title">
+                <h1>UCF Barcode</h1>
+            </div>
+            {% if item.ucf_barcode == None %}
+            <p><span style="color:yellow"> Warning! </span> this item has no UCF Barcode!</p>
+            {% else %}
+            <p>{{item.ucf_barcode}}</p>
+            {% endif %}
+
+            <div class="item_title">
+                <h1>Sale Barcode</h1>
+            </div>
+            {% if item.sale_barcode == None %}
+            <p><span style="color:yellow"> Warning! </span> this item has no Sale Barcode!</p>
+            {% else %}
+            <p>{{item.sale_barcode}}</p>
+            {% endif %}
+
+        </div>
+        <div class="right">
+            <div class="item_title">
+                <h1>Image</h1>
+            </div>
+            {% if item.image|length > 5 %}
+            <img src="{{item.image}}" alt="">
+            {% else %}
+            <img src="{% static 'img/no-pic.jpg' %}" alt="">
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

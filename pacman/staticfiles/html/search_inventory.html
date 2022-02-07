@@ -13,19 +13,21 @@
                 <th onclick="sortTable(0)">Name</th>
                 <th onclick="sortTable(1)">Description</th>
                 <th onclick="sortTable(2)">Location</th>
-                <th onclick="sortTable(3)">Quantity</th>
+                <th onclick="sortTable(3)">Condition</th>
+                <th onclick="sortTable(4)">Quantity</th>
             </tr>
             {% for Item in results %}
             <tr>
-                <td> <a href="/search_inventory/{{Item.id}}">{{ Item.name }}</a> </td>
+                <td style="text-align: center;"> <a href="/items/{{Item.id}}">{{ Item.name }}</a> </td>
                 <td>{% if Item.description|length > 24 and not item_page%}
                     {{ Item.description|make_list|slice:':24'|join:'' }}...
                     {% else %}
                     {{Item.description}}
                     {% endif %}
                 </td>
-                <td> <a href="/location_map/{{Item.id}}"> {{ Item.location }} </a> </td>
-                <td>{{ Item.quantity }} </td>
+                <td style="text-align: center;"> <a href="/location_map/{{Item.id}}"> {{ Item.location }} </a> </td>
+                <td style="text-align: center;">{{ Item.condition }}</td>
+                <td style="text-align: center;">{{ Item.quantity }}</td>
             </tr>
             {% endfor %}
         </table>
