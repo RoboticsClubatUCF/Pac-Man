@@ -70,7 +70,8 @@ def search_inventory(request, query=None, pageid=0):
 def lab_location(request, item_id):
     searched_item = Item.objects.filter(id__contains=item_id).first()
     full_loc = str(searched_item.location)
-    location_dir = str(searched_item.location)[:2]
+    location_dir = str(searched_item.location)[:2].lower()
+    location_first_l = str(searched_item.location)[0]
     other_items = Item.objects.filter(
         location__name__icontains=searched_item.location)
     return render(request, 'lab_location.html',
@@ -79,6 +80,7 @@ def lab_location(request, item_id):
                       'dir_loc': location_dir,
                       'full_loc': full_loc,
                       'other_items': other_items,
+                      'first_l': location_first_l,
                   })
 
 

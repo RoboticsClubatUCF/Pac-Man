@@ -14,7 +14,11 @@
         Python, create the image on request, then render it
         Gurrent goal is to use {{Dir_Loc}} to get the location type we want
     -->
-    <img class="location_img" src="{{ STATIC_PREFIX }}img/lab_locations/Lab_Layout.jpg" alt="">
+    {% if first_l == 'L' %}
+    <img class="location_img" src="{{ STATIC_PREFIX }}img/lab_locations/L.jpg" alt="">
+    {% else %}
+    <img class="location_img" src="{{ STATIC_PREFIX }}img/lab_locations/{{dir_loc}}.jpg" alt="">
+    {% endif %}
 
     <!-- End Block -->
     <div style="margin-top: 150px; margin: auto; width: 60%; display: block;text-align: center;">
