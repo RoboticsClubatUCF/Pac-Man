@@ -177,7 +177,7 @@ def search_ByValue(request):
     value = 0
     for i in Item.objects.all():
         if i.est_value is not None:
-            value += float(i.est_value)
+            value += float(i.est_value) * float(i.quantity)
     return render(request,"search_value.html",{
         'value':value
     })
