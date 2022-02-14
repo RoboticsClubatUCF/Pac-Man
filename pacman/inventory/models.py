@@ -41,6 +41,12 @@ class Location(Model):
                 self.name += str(self.micro_location)
         elif str(self.macro_location) == 'L':
             self.name = str(self.macro_location) + str(location_id_fix(self.macro_location_id))
+        elif str(self.macro_location == 'B'):
+            self.name = str(self.macro_location) + str(location_id_fix(self.macro_location_id))
+            if str(self.micro_location == 'S'):
+                self.name += str(str(self.micro_location) + str(location_id_fix(self.micro_location_id)))
+            elif str(self.micro_location == 'U'):
+                self.name += str(str(self.micro_location) + str(location_id_fix(self.micro_location_id)))
         else:
             self.name = str(self.macro_location + str(location_id_fix(self.macro_location_id)) + self.micro_location + str(location_id_fix(self.micro_location_id)))
         super(Location, self).save(*args, **kwargs)
