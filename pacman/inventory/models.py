@@ -33,6 +33,7 @@ class Location(Model):
     def save(self, *args, **kwargs):
         #self.name = str(self.macro_location + str(location_id_fix(self.macro_location_id)) + self.micro_location + str(location_id_fix(self.micro_location_id)))
         #check to see if the user wants to input a table
+        #   stil cannot have 10 of any type of location
         #   tables do not have shelves, and thus the user is
         #   unlikely to use T1S0, and instread type T1, and leave the rest blank
         if str(self.macro_location) == 'T':

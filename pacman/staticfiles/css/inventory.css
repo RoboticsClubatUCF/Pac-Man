@@ -44,7 +44,7 @@ a:hover {
 .location_img {
   margin: auto;
   height: 512px;
-  width: 100%;
+  max-width: 60%;
   overflow: hidden;
   display: block;
 }
