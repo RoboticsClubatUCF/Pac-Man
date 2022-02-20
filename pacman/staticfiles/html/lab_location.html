@@ -3,7 +3,7 @@
 {% load static %}
 <div style="margin-top: 100px;">
     <hr />
-    <h1 style="text-align: center; font-size: 32; font-weight: 900;">"{{ searched.name }}" can be found at : {{full_loc}}</h1>
+    <h1 style="text-align: center; font-size: 32; font-weight: 900;"><a href="/items/{{searched.id}}">"{{ searched.name }}"</a> can be found at : {{full_loc}}</h1>
     <hr />
 
     <!-- Show where the Item is-->
