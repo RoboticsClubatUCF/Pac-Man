@@ -5,6 +5,7 @@ from .models import Item, Location
 class LocationAdmin(admin.ModelAdmin):
     model = Location
     exclude = ('name',)
+    ordering = ['name']
 
 
 """
@@ -29,29 +30,36 @@ BARCODE
 """
 
 
+@admin.action(description="Remove registered location")
+def remove_location(modeladmin, request, queryset):
+    queryset.update(location=None)
+
 
 class ItemAdmin(admin.ModelAdmin):
     model = Item
+    list_display = ['name', 'location', 'quantity', 'condition']
+    ordering = ['name']
+    actions = [remove_location]
     fieldsets = [
         ('General Info',
             {
-                 'fields': ['name', 'description', 'quantity','condition']
+                'fields': ['name', 'description', 'quantity', 'condition']
             }
          ),
         ('Type & Location',
             {
-                 'fields': ['general_type', 'location']
+                'fields': ['general_type', 'location']
             }
          ),
-         ('Misc',
-             {
-                 'fields': ['est_value','image']
-             }
+        ('Misc',
+            {
+                'fields': ['est_value', 'image']
+            }
          ),
-         ('Barcodes',
-             {
-                 'fields': ['rccf_barcode','ucf_barcode','sale_barcode']
-             }
+        ('Barcodes',
+            {
+                'fields': ['rccf_barcode', 'ucf_barcode', 'sale_barcode']
+            }
          )
     ]
 

@@ -71,6 +71,8 @@ def lab_location(request, item_id):
     searched_item = Item.objects.filter(id__contains=item_id).first()
     full_loc = str(searched_item.location)
     location_dir = str(searched_item.location)[:2].lower()
+    if (location_dir[0] == 'l'):
+        location_dir = 'L'
     location_first_l = str(searched_item.location)[0]
     other_items = Item.objects.filter(
         location__name__icontains=searched_item.location)
