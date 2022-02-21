@@ -6,14 +6,6 @@
     <h1 style="text-align: center; font-size: 32; font-weight: 900;"><a href="/items/{{searched.id}}">"{{ searched.name }}"</a> can be found at : {{full_loc}}</h1>
     <hr />
 
-    <!-- Show where the Item is-->
-    <!-- Current Ideas : 
-        PIXIJS to render out an image using a sprite and an absolute position
-        A whole bunch of images
-        Python, create the image on request, then render it
-        Gurrent goal is to use {{Dir_Loc}} to get the location type we want
-    -->
-
     <img class="location_img" src="{% static 'img/lab_locations/'|add:dir_loc|add:'.jpg' %}" alt="">
 
     <!-- End Block -->
