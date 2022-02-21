@@ -5,6 +5,9 @@
   font-family: 'Noto Sans Mono', monospace;
   src: url('https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@200&display=swap');
 }
+html{
+scroll-behavior: smooth;
+}
 
 * {
   cursor: default;
@@ -32,6 +35,7 @@ h3 {
   text-align: center;
   justify-content: center;
 }
+
 
 a:hover {
   color: #f2f2f2;
