@@ -1,4 +1,8 @@
+from datetime import date, timedelta,datetime
+from distutils.log import warn
 import enum
+from itertools import count
+from pydoc import describe
 from django.shortcuts import render
 from .models import Item
 from pacman.settings import ITEMS_PER_PAGE
@@ -14,8 +18,46 @@ class item_condition (enum.Enum):
 
 
 def home(request):
+
+    exp_items = Item.objects.none()
+    warn_items = Item.objects.none()
+    error_items = Item.objects.none()
+
+
+
+    ex_items = 0
+    w_items = 0
+    err_items = 0
+
+    for i in Item.objects.all():
+        # Check if an item is expired
+        if ((i.exp_date - date.today()) <= timedelta(0,0)):
+            exp_items = exp_items | i
+        # Check if an item has some missing, but usefull informaton
+        if (i.description == None or len(str(i.description)) < 5 or i.quantity == None or i.location == None): # needs to be tested
+            warn_items = warn_items | i
+        # Check if an item has an important Issue
+    # Honestly, I don't want to talk about it . . . 
+    try:
+        ex_items = exp_items.count()
+    except:
+        pass
+    try:
+        w_items = warn_items.count()
+    except:
+        pass
+    try:
+        err_items = error_items.count()
+    except:
+        pass
+    
     return render(request, "inventory.html",
-                  {})
+                  {
+                    'exp_items':ex_items,#exp_items.count(),
+                    'warn_items':w_items,#warn_items.count(),
+                    'error_items':err_items,#error_items.count(),
+                    'home':True
+                  })
 
 
 def search_inventory(request, query=None, pageid=0):

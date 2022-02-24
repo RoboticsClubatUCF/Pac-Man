@@ -12,6 +12,7 @@
 	<link rel="shortcut icon" href="{% static 'img/Pacman.ico'%}" type="image/x-icon">
 	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@200&display=swap" rel="stylesheet" />
 </head>
+
 <nav class="search-displace">
 	<h1 class="title"> Inventory @ RCCF</h1>
 	<div id="wrap">
@@ -22,8 +23,17 @@
 		</form>
 	</div>
 </nav>
+{% if home != None %}
+<div style="margin: auto; margin-top: 90px; position: relative; float: left; border: 5px #ffd88f solid; padding: 10px; color: #f2f2f2;">
+	<h1>Notifications</h1>
+	<span>{{exp_items}} Items have <strong style="color: rgb(128, 192, 230);">Expired</strong></span> <br />
+	<span>{{warn_items}} Items have <strong style="color: rgb(255, 255, 125);">Warnings</strong></span> <br />
+	<span>{{error_items}} Items have <strong style="color: rgb(255, 109, 109);">Errors</strong></span> <br />
+</div>
+{% endif %}
+
 <div style="margin:auto; margin-top: 90px; position: absolute;right: 0;">
-	<a href="/condition/">Want to search by Condtion?</a>
+	<a href="/condition">Want to search by Condtion?</a>
 	<br />
 	<a href="/value">Check out Our Lab's (estimated) Worth!</a>
 </div>
@@ -33,6 +43,7 @@
 		{% block content %}{% endblock %}
 	</div>
 </body>
+
 <div class="pages">
 	<div class="pagination">
 		{% if pages %}
@@ -47,8 +58,9 @@
 			<div class="pacman"></div>
 		{% endif %}
 	</div>
-
 </div>
+
+
 <script>
 	var pages = document.getElementsByName("dots");
 	document.getElementsByClassName("title")[0].addEventListener("click",function(){location.assign(window.location.origin);});

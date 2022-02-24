@@ -54,6 +54,15 @@
             {% endif %}
 
             <div class="item_title">
+                <h1>Expiration Date</h1>
+            </div>
+            {% if item.exp_date == None %}
+            <p>This item has no Expiration Date</p>
+            {% else %}
+            <p>{{item.exp_date}}</p>
+            {% endif %}
+
+            <div class="item_title">
                 <h1>Database ID</h1>
             </div>
             <center>{{item.id}}</center>

@@ -96,6 +96,8 @@ class Item(Model):
     location = models.ForeignKey(Location, on_delete=models.CASCADE, blank=True,null=True, help_text="Location this item")
     image = models.CharField(max_length=2048,blank=True,null=True,help_text="enter the URL of the image that represents this item") # hopefully this is long enough to store any img url
     est_value = models.FloatField(blank=True,null=True,help_text="the MSRP or current estimated value of the item") # store the "estimated value" of the item
+    exp_date = models.DateField(blank=True,null=True,help_text="The Expiration date for this item, if applicable")
+    yellow_tag = models.BooleanField(blank=True,null=True,help_text="Select if the Item has a yellow UCF Barcode")
 
     def __str__(self):
         return self.name + "  -  " + str(self.location)

@@ -53,12 +53,12 @@ class ItemAdmin(admin.ModelAdmin):
          ),
         ('Misc',
             {
-                'fields': ['est_value', 'image']
+                'fields': ['est_value', 'exp_date', 'image']
             }
          ),
         ('Barcodes',
             {
-                'fields': ['rccf_barcode', 'ucf_barcode', 'sale_barcode']
+                'fields': ['yellow_tag','rccf_barcode', 'ucf_barcode', 'sale_barcode']
             }
          )
     ]
