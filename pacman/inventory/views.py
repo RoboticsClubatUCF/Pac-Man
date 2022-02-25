@@ -198,19 +198,9 @@ def items_with_condition(request, c=123450):
 
 
 def notification_table(request):
-    ex_items = 0
-    w_items = 0
-    err_items = 0
-    _old = "2010-01-01"
+    _old = "1999-01-01"
     
     expired = Item.objects.filter(exp_date__range=[_old,str(datetime.today().date())])
-    for i in Item.objects.all():
-        # Check if an item is expired
-        
-        # Check if an item has some missing, but usefull informaton
-        if (i.description == None or len(str(i.description)) < 5 or i.quantity == None or i.location == None): # needs to be tested
-            w_items+=1
-        # Check if an item has an important Issue
     items = expired
     return render(request,'notifications.html',
     {

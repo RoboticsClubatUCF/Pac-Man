@@ -15,7 +15,8 @@ urlpatterns = [
 	path('items/<int:item_id>', views.item_page, name='item-page'),
 	path('condition/<int:c>',views.items_with_condition, name="items_condtions_list"),
 	path('condition/',views.items_with_condition, name="items_condtions_list"),
-	path("value",views.search_ByValue,name="Items_Value_List")
+	path("value",views.search_ByValue,name="Items_Value_List"),
+	path("notif",views.notification_table,name="Notifications"),
 
 ] + static(MEDIA_URL, document_root=MEDIA_ROOT)
 urlpatterns += staticfiles_urlpatterns()

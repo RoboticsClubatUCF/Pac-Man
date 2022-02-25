@@ -1,0 +1,41 @@
+{% extends 'inventory.html' %}
+{% load static %}
+{% block content %}
+
+<center style="margin-top: 200px;">
+    <hr />
+    <br />
+    <div style="margin:auto;">
+        <table id="item_table" style="width: 100%;">
+            <tr class="top-row">
+                <th onclick="sortTable(0)">Name</th>
+                <th onclick="sortTable(1)">Description</th>
+                <th onclick="sortTable(2)">Location</th>
+                <th onclick="sortTable(3)">Condition</th>
+                <th onclick="sortTable(4)">Quantity</th>
+                <th onclick="sortTable(5)">Notification</th>
+            </tr>
+
+            {% for Item in items %}
+            <tr>
+                <td style="text-align: center;"> <a href="/items/{{Item.id}}">{{ Item.name }}</a> </td>
+                <td>{% if Item.description|length > 24 and not item_page%}
+                    {{ Item.description|make_list|slice:':24'|join:'' }}...
+                    {% else %}
+                    {{Item.description}}
+                    {% endif %}
+                </td>
+                <td style="text-align: center;"> <a href="/location_map/{{Item.id}}"> {{ Item.location }} </a> </td>
+                <td style="text-align: center;">{{ Item.condition }}</td>
+                <td style="text-align: center;">{{ Item.quantity }}</td>
+                <!--Create a TD that is different depending on what is wrong with an item
+                right now, it will only print out the date the item expired-->
+                <td style="text-align: center;">{{ Item.exp_date }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</center>
+
+
+{% endblock %}
