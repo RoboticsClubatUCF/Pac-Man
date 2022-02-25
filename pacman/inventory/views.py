@@ -1,4 +1,4 @@
-from datetime import date, timedelta,datetime
+from datetime import date, timedelta, datetime
 from distutils.log import warn
 import enum
 from itertools import count
@@ -7,6 +7,7 @@ from django.shortcuts import render
 from .models import Item
 from pacman.settings import ITEMS_PER_PAGE
 # Create your views here.
+
 
 class item_condition (enum.Enum):
     Cannibalized = 0
@@ -18,45 +19,24 @@ class item_condition (enum.Enum):
 
 
 def home(request):
-
-    exp_items = Item.objects.none()
-    warn_items = Item.objects.none()
-    error_items = Item.objects.none()
-
-
-
     ex_items = 0
     w_items = 0
     err_items = 0
 
     for i in Item.objects.all():
         # Check if an item is expired
-        if ((i.exp_date - date.today()) <= timedelta(0,0)):
-            exp_items = exp_items | i
+        if ((i.exp_date - date.today()) <= timedelta(0, 0)):
+            ex_items += 1
         # Check if an item has some missing, but usefull informaton
-        if (i.description == None or len(str(i.description)) < 5 or i.quantity == None or i.location == None): # needs to be tested
-            warn_items = warn_items | i
+        if (i.description == None or len(str(i.description)) < 5 or i.quantity == None or i.location == None):  # needs to be tested
+            w_items += 1
         # Check if an item has an important Issue
-    # Honestly, I don't want to talk about it . . . 
-    try:
-        ex_items = exp_items.count()
-    except:
-        pass
-    try:
-        w_items = warn_items.count()
-    except:
-        pass
-    try:
-        err_items = error_items.count()
-    except:
-        pass
-    
     return render(request, "inventory.html",
                   {
-                    'exp_items':ex_items,#exp_items.count(),
-                    'warn_items':w_items,#warn_items.count(),
-                    'error_items':err_items,#error_items.count(),
-                    'home':True
+                    'exp_items': ex_items,  # exp_items.count(),
+                    'warn_items': w_items,  # warn_items.count(),
+                    'error_items': err_items,  # error_items.count(),
+                    'home': True
                   })
 
 
@@ -75,8 +55,7 @@ def search_inventory(request, query=None, pageid=0):
 
     rccf_bar = Item.objects.filter(rccf_barcode__icontains=searched)
     ucf_bar = Item.objects.filter(ucf_barcode__icontains=searched)
-    sale_bar= Item.objects.filter(sale_barcode__icontains=searched)
-
+    sale_bar = Item.objects.filter(sale_barcode__icontains=searched)
 
     results = names | generals | description | location | rccf_bar | ucf_bar | sale_bar
     results = results.order_by('name')
@@ -105,8 +84,6 @@ def search_inventory(request, query=None, pageid=0):
                    'item_page': item_bio_page,
                    'pages': num_pages_,
                    })
-
-
 
 
 def lab_location(request, item_id):
@@ -147,7 +124,7 @@ def item_page(request, item_id):
                   })
 
 
-def items_with_condition(request, c = 123450):
+def items_with_condition(request, c=123450):
     # c is the condition state
     # 0 is Cannibalized
     # 1 is Obsolete
@@ -157,7 +134,7 @@ def items_with_condition(request, c = 123450):
     # 5 is New
     # Error Found :
     #   if c = any int starting with '0' it will not be handled
-    #       
+    #
 
     # C can be a number > 5 to combine searches
     # example :
@@ -175,7 +152,8 @@ def items_with_condition(request, c = 123450):
     s3 = False
     s4 = False
     s5 = False
-    if (c > 5 or not str(c).__len__.__eq__(0)):
+    # expand this system to include items with warnings, or with errors, or that are expired
+    if (c > 8 or not str(c).__len__.__eq__(0)):
         query = str(c)
         for search in query:
             if int(search) == 0:
@@ -217,6 +195,27 @@ def items_with_condition(request, c = 123450):
                       's4': s4,
                       's5': s5,
                   })
+
+
+def notification_table(request):
+    ex_items = 0
+    w_items = 0
+    err_items = 0
+    _old = "2010-01-01"
+    
+    expired = Item.objects.filter(exp_date__range=[_old,str(datetime.today().date())])
+    for i in Item.objects.all():
+        # Check if an item is expired
+        
+        # Check if an item has some missing, but usefull informaton
+        if (i.description == None or len(str(i.description)) < 5 or i.quantity == None or i.location == None): # needs to be tested
+            w_items+=1
+        # Check if an item has an important Issue
+    items = expired
+    return render(request,'notifications.html',
+    {
+        'items':items
+    })
 def search_ByValue(request):
     value = 0
     for i in Item.objects.all():
