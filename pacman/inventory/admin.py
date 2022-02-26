@@ -37,7 +37,7 @@ def remove_location(modeladmin, request, queryset):
 
 class ItemAdmin(admin.ModelAdmin):
     model = Item
-    list_display = ['name', 'location', 'quantity', 'condition']
+    list_display = ['name', 'location', 'quantity', 'est_value', 'condition','exp_date']
     ordering = ['name']
     actions = [remove_location]
     fieldsets = [
@@ -58,7 +58,7 @@ class ItemAdmin(admin.ModelAdmin):
          ),
         ('Barcodes',
             {
-                'fields': ['yellow_tag','rccf_barcode', 'ucf_barcode', 'sale_barcode']
+                'fields': ['yellow_tag', 'rccf_barcode', 'ucf_barcode', 'sale_barcode']
             }
          )
     ]

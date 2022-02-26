@@ -23,14 +23,14 @@ def home(request):
     w_items = 0
     err_items = 0
 
-    for i in Item.objects.all():
+    '''for i in Item.objects.all():
         # Check if an item is expired
         if ((i.exp_date - date.today()) <= timedelta(0, 0)):
             ex_items += 1
         # Check if an item has some missing, but usefull informaton
         if (i.description == None or len(str(i.description)) < 5 or i.quantity == None or i.location == None):  # needs to be tested
             w_items += 1
-        # Check if an item has an important Issue
+        # Check if an item has an important Issue'''
     return render(request, "inventory.html",
                   {
                     'exp_items': ex_items,  # exp_items.count(),

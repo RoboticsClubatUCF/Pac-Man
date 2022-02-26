@@ -8,7 +8,6 @@ def location_id_fix(a):
     else:
         return a
 
-
 class Location(Model):
     MACRO_LOCATIONS = [
         ('T', 'Table'),
@@ -63,6 +62,9 @@ class Item(Model):
         ('Hand Tool', 'HAND TOOL'),
         ('Safety Equipment', 'SAFETY EQUIPMENT'),
         ('Power Tool', 'POWER TOOL'),
+        ('Flammable','FLAMMABLE'),
+        ('Personal Hygene','PERSONAL HYGENE'),
+        ('Hardware','HARDWARE'),
     ]
     CONDITIONS = [
         ('New', 'New'),
