@@ -65,6 +65,8 @@ class Item(Model):
         ('Flammable','FLAMMABLE'),
         ('Personal Hygene','PERSONAL HYGENE'),
         ('Hardware','HARDWARE'),
+        ('Consumable','CONSUMABLE'),
+        ('Wisdom Paper','WISDOM PAPER')
     ]
     CONDITIONS = [
         ('New', 'New'),

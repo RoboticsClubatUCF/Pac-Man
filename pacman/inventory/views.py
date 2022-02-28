@@ -83,6 +83,7 @@ def search_inventory(request, query=None, pageid=0):
                    'num_results': num_results,
                    'item_page': item_bio_page,
                    'pages': num_pages_,
+                   'page_num':pageid,
                    })
 
 

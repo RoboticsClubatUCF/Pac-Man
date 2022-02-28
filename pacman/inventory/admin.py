@@ -37,7 +37,7 @@ def remove_location(modeladmin, request, queryset):
 
 class ItemAdmin(admin.ModelAdmin):
     model = Item
-    list_display = ['name', 'location', 'quantity', 'est_value', 'condition','exp_date']
+    list_display = ['name', 'location', 'quantity','est_value', 'condition','exp_date']
     ordering = ['name']
     actions = [remove_location]
     fieldsets = [

@@ -53,7 +53,7 @@
 				{% else %}
 				<input id="dot-{{forloop.counter}}" type="radio" name="dots">
 				{% endif %}
-				<label for="dot-{{forloop.counter}}">|<p>{{forloop.counter}}</p></label>
+				<label id="dot--{{forloop.counter}}" for="dot-{{forloop.counter}}">|<p>{{forloop.counter}}</p></label>
 			{% endfor %}
 			<div class="pacman"></div>
 		{% endif %}
@@ -72,5 +72,9 @@
 		var baseUrl = getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
 		location.assign(baseUrl + "/x/{{searched}}/" + x);
 	}
+	var pagenum = "{{page_num}}";
+	pagenum++;
+	document.getElementById("dot--"+pagenum).style.backgroundColor="white";
+	document.getElementById("dot--"+pagenum).style.padding="5px";
 </script>
 </html>
