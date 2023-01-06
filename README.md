@@ -21,6 +21,8 @@ reqs
 
 ### Step by Step
 
+if you want a different password for the database, change it in the etc/mysql dir
+
 install  the python libs
 install mysql n stuff
 log into mysql
@@ -35,7 +37,8 @@ run the following commands
 aight now migrate all the stuff
 
 run these things
-    python(VERSION) ./manage.py makemigrations 
+    python(VERSION) ./manage.py createsuperuser # this makes a super user that can access the admin panel at localhost:8000/admin
+    python(VERSION) ./manage.py makemigrations
     python(VERSION) ./manage.py makemigrations inventory
     python(VERSION) ./manage.py migrate
 
