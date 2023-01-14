@@ -13,35 +13,64 @@ run
 ## Installation
 
 reqs
-    python >= 3.9
-    python libs :
-        django
-        mysqlclient
-    mysql db [https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-ubuntu-20-04]
+    docker-desktop
+    vs-code-docker-extention
 
 ### Step by Step
 
 if you want a different password for the database, change it in the etc/mysql dir
 
-install  the python libs
-install mysql n stuff
-log into mysql
-run the following commands
-    CREATE USER 'roboticsuser'@'localhost' IDENTIFIED BY 'pwd';
+since the project now uses docker to handle the DBs, here is what needs to be done :
+
+install docker desktop,
+pull the mysql container from docker's source
+run the mysql container, with the following options : 
+    name = mysqldb
+    port 3306::3306
+        33060::unbound
+    OPTIONAL_ENV_VAR:
+        MYSQL_ROOT_PASSWORD = [whatever password you want, just remember it]
+in vs-code, create a dev container using the pacman project
+once both docker containers have stabilized, and are running (5-10min)
+get ip of mysqldb
+    docker ps
+    windows : docker inspect <container id> | findstr "IPAddress"
+    Unix : docker inspect <container id> | grep "IPAddress"
+copy ip and put it in the "host=" section under etc/mysql/my.cnf in this dir
+
+IN THE MYSQL DOCKER CONTAINER
+
+run the following commands : 
+    mysql -u root -p #use the password created earlier
+    #once in mysql run the following
+    CREATE USER 'roboticsuser'@'%' IDENTIFIED BY 'pwd';
     CREATE DATABASE robotics_inv;
-    GRANT ALL PRIVILEGES ON *.* TO 'roboticsuser'@'localhost' WITH GRANT OPTION;
-    GRANT ALL ON * TO 'roboticsuser'@'localhost';
+    GRANT ALL PRIVILEGES ON *.* TO 'roboticsuser'@'%' WITH GRANT OPTION;
     FLUSH PRIVILEGES;
     exit
 
-aight now migrate all the stuff
 
-run these things
-    python(VERSION) ./manage.py createsuperuser # this makes a super user that can access the admin panel at localhost:8000/admin
-    python(VERSION) ./manage.py makemigrations
-    python(VERSION) ./manage.py makemigrations inventory
-    python(VERSION) ./manage.py migrate
+IN THE PACMAN DOCKER CONTAINER
+run the following commands : 
+    sudo apt install update
+    sudo apt install python3.9-dev default-libmysqlclient-dev build-essential
+    python3.9 -m pip install django mysqlclient
+    cd /workspaces/Pac-Man/pacman
+    python3.9 ./manage.py makemigrations inventory
+    python3.9 ./manage.py makemigrations 
+    python3.9 ./manage.py migrate
+    python3.9 ./manage.py createsuperuser # go through creating a master user
+    python3.9 ./manage.py migrate #for good luck
+    python3.9 ./manage.py runserver
 
-now you can finally run the server!
 
-    python(VERSION) ./manage.py runserver
+#### Common Errors :
+
+if you run into the error 'roboticsuser'@'172.17.0.4' access denied, do the following
+
+log into mysql from the docker container
+run the following commands
+    use mysql
+    select * from user # if a user is named "'roboticsuser'@'172.17.0.4'" , then run the following
+    drop user 'roboticsuser'@'172.17.0.4'
+
