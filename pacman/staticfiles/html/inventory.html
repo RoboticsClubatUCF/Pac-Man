@@ -14,7 +14,11 @@
 </head>
 
 <nav class="search-displace">
-	<h1 class="title"> Inventory @ RCCF</h1>
+	<div style="display: grid; gap: 5vw;">
+		<h1 class="title" style="grid-column: 1; grid-row: 1; background-color: rgb(60, 60, 60); padding:5px;"> Inventory @ RCCF</h1>
+		<h1 class="title" style="grid-column: 2; grid-row: 1; padding: 0; text-align: right; background-color: rgb(60, 60, 60); padding:5px;" onclick="location.assign('/admin/')">Admin
+			Panel</h1>
+	</div>
 	<div id="wrap">
 		<form method="post" action="{% url 'search-inventory' %}" autocomplete="on">
 			{% csrf_token %}
@@ -24,7 +28,8 @@
 	</div>
 </nav>
 {% if home != None %}
-<div style="margin: auto; margin-top: 90px; position: relative; float: left; border: 5px #ffd88f solid; padding: 10px; color: #f2f2f2;">
+<div
+	style="margin: auto; margin-top: 90px; position: relative; float: left; border: 5px #ffd88f solid; padding: 10px; color: #f2f2f2;">
 	<h1>Notifications</h1>
 	<!--span>{{exp_items}} Items have <a style="color: rgb(128, 192, 230);" href="/notif">Expired</a></span> <br />
 	<span>{{warn_items}} Items have <a style="color: rgb(255, 255, 125);" href="/notif">Warnings</a></span> <br />
@@ -47,15 +52,15 @@
 <div class="pages">
 	<div class="pagination">
 		{% if pages %}
-			{% for dot in pages %}
-				{% if forloop.counter0 == 0 %}
-				<input id="dot-{{forloop.counter}}" type="radio" name="dots" checked="checked">
-				{% else %}
-				<input id="dot-{{forloop.counter}}" type="radio" name="dots">
-				{% endif %}
-				<label id="dot--{{forloop.counter}}" for="dot-{{forloop.counter}}">|<p>{{forloop.counter}}</p></label>
-			{% endfor %}
-			<div class="pacman"></div>
+		{% for dot in pages %}
+		{% if forloop.counter0 == 0 %}
+		<input id="dot-{{forloop.counter}}" type="radio" name="dots" checked="checked">
+		{% else %}
+		<input id="dot-{{forloop.counter}}" type="radio" name="dots">
+		{% endif %}
+		<label id="dot--{{forloop.counter}}" for="dot-{{forloop.counter}}">|<p>{{forloop.counter}}</p></label>
+		{% endfor %}
+		<div class="pacman"></div>
 		{% endif %}
 	</div>
 </div>
@@ -63,18 +68,19 @@
 
 <script>
 	var pages = document.getElementsByName("dots");
-	document.getElementsByClassName("title")[0].addEventListener("click",function(){location.assign(window.location.origin);});
+	document.getElementsByClassName("title")[0].addEventListener("click", function () { location.assign(window.location.origin); });
 	for (let i = 0; i < pages.length; i++) {
-		pages[i].addEventListener("click",function(){loadPageX(i)});
+		pages[i].addEventListener("click", function () { loadPageX(i) });
 	}
-	function loadPageX(x){
+	function loadPageX(x) {
 		var getUrl = window.location;
 		var baseUrl = getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
 		location.assign(baseUrl + "/x/{{searched}}/" + x);
 	}
 	var pagenum = "{{page_num}}";
 	pagenum++;
-	document.getElementById("dot--"+pagenum).style.backgroundColor="white";
-	document.getElementById("dot--"+pagenum).style.padding="5px";
+	document.getElementById("dot--" + pagenum).style.backgroundColor = "white";
+	document.getElementById("dot--" + pagenum).style.padding = "5px";
 </script>
+
 </html>
