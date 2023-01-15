@@ -51,7 +51,6 @@ run the following commands :
     sudo apt install python3.9-dev default-libmysqlclient-dev build-essential nmap
     python3.9 -m pip install django mysqlclient
     cd /workspaces/Pac-Man/pacman
-    python3.9 ./update_db_ip.py
     python3.9 ./manage.py makemigrations inventory
     python3.9 ./manage.py makemigrations 
     python3.9 ./manage.py migrate

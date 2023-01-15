@@ -28,6 +28,3 @@ def main():
         with open("./etc/mysql/my.cnf", "w") as f:
             for line in lines:
                 f.write(line)
-
-
-main()
