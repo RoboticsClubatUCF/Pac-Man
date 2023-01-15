@@ -1,31 +1,28 @@
 {% extends 'inventory.html' %}
 {% block content %}
 {% load static %}
-{% get_static_prefix as STATIC_PREFIX %}
 <div style="margin-top: 100px;">
     <hr />
-    <h1 style="text-align: center; font-size: 32; font-weight: 900;">"{{ searched.name }}" can be found at : {{full_loc}}</h1>
+    <h1 style="text-align: center; font-size: 32; font-weight: 900;"><a href="/items/{{searched.id}}">"{{ searched.name }}"</a> can be found at : {{full_loc}}</h1>
     <hr />
 
-    <!-- Show where the Item is-->
-    <!-- Current Ideas : 
-        PIXIJS to render out an image using a sprite and an absolute position
-        A whole bunch of images
-        Python, create the image on request, then render it
-        Gurrent goal is to use {{Dir_Loc}} to get the location type we want
-    -->
-    <img class="location_img" src="{{ STATIC_PREFIX }}img/lab_locations/Lab_Layout.jpg" alt="">
+    <img class="location_img" src="{% static 'img/lab_locations/'|add:dir_loc|add:'.jpg' %}" alt="">
 
     <!-- End Block -->
     <div style="margin-top: 150px; margin: auto; width: 60%; display: block;text-align: center;">
-        <hr />
-        <h1 style="text-align: center;font-size: 14;">Scroll Down for More</h1>
+        <br />
+        <section style="text-align: center; border: 2px solid #f2f2f2; color: #eee; font-size: 14px">
+            <p id="Remember"><h1>Remember!</h1> <hr  style="width: 30%;"/><br />
+                Shelves for <strong>Cabinets</strong> and <strong>Racks</strong> are read from top to bottom!
+            </p>
+        </section>
+        <h1 style="text-align: center;font-size: 14; color: #F2C572;"><a href="#item_table" style="color: inherit;">Scroll Down for More</a></h1>
         <hr />
     </div>
     <hr style="margin-top: 370px;" />
     <h1 style="text-align: center; font-size: 32; font-weight: 900;font-weight: 900;"> Other Items found Here : </h1>
     <div style="margin: auto;width: 80%;">
-        <table id=item_table align="center">
+        <table id="item_table" align="center">
             <tr class="top-row">
                 <th onclick="sortTable(0)">Name</th>
                 <th onclick="sortTable(1)">Description</th>

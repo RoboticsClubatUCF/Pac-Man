@@ -8,13 +8,13 @@ def location_id_fix(a):
     else:
         return a
 
-
 class Location(Model):
     MACRO_LOCATIONS = [
         ('T', 'Table'),
         ('R', 'Rack'),
         ('C', 'Cabinet'),
         ('B', 'WorkBench'),
+        ('L', 'Locker'),
     ]
     SUB_LOCATIONS = [
         ('S', 'Shelf'),
@@ -32,12 +32,21 @@ class Location(Model):
     def save(self, *args, **kwargs):
         #self.name = str(self.macro_location + str(location_id_fix(self.macro_location_id)) + self.micro_location + str(location_id_fix(self.micro_location_id)))
         #check to see if the user wants to input a table
+        #   stil cannot have 10 of any type of location
         #   tables do not have shelves, and thus the user is
         #   unlikely to use T1S0, and instread type T1, and leave the rest blank
         if str(self.macro_location) == 'T':
             self.name = str(self.macro_location) + str(location_id_fix(self.macro_location_id))
             if self.micro_location == 'U':
                 self.name += str(self.micro_location)
+        elif str(self.macro_location) == 'L':
+            self.name = str(self.macro_location) + str(location_id_fix(self.macro_location_id))
+        elif str(self.macro_location) == 'B':
+            self.name = str(self.macro_location) + str(location_id_fix(self.macro_location_id))
+            if str(self.micro_location) == 'S':
+                self.name += str(str(self.micro_location) + str(location_id_fix(self.micro_location_id)))
+            elif str(self.micro_location) == 'U':
+                self.name += str(location_id_fix(self.micro_location))
         else:
             self.name = str(self.macro_location + str(location_id_fix(self.macro_location_id)) + self.micro_location + str(location_id_fix(self.micro_location_id)))
         super(Location, self).save(*args, **kwargs)
@@ -53,6 +62,11 @@ class Item(Model):
         ('Hand Tool', 'HAND TOOL'),
         ('Safety Equipment', 'SAFETY EQUIPMENT'),
         ('Power Tool', 'POWER TOOL'),
+        ('Flammable','FLAMMABLE'),
+        ('Personal Hygene','PERSONAL HYGENE'),
+        ('Hardware','HARDWARE'),
+        ('Consumable','CONSUMABLE'),
+        ('Wisdom Paper','WISDOM PAPER')
     ]
     CONDITIONS = [
         ('New', 'New'),
@@ -86,6 +100,8 @@ class Item(Model):
     location = models.ForeignKey(Location, on_delete=models.CASCADE, blank=True,null=True, help_text="Location this item")
     image = models.CharField(max_length=2048,blank=True,null=True,help_text="enter the URL of the image that represents this item") # hopefully this is long enough to store any img url
     est_value = models.FloatField(blank=True,null=True,help_text="the MSRP or current estimated value of the item") # store the "estimated value" of the item
+    exp_date = models.DateField(blank=True,null=True,help_text="The Expiration date for this item, if applicable")
+    yellow_tag = models.BooleanField(blank=True,null=True,help_text="Select if the Item has a yellow UCF Barcode")
 
     def __str__(self):
         return self.name + "  -  " + str(self.location)

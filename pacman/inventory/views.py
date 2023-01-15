@@ -1,8 +1,13 @@
+from datetime import date, timedelta, datetime
+from distutils.log import warn
 import enum
+from itertools import count
+from pydoc import describe
 from django.shortcuts import render
 from .models import Item
 from pacman.settings import ITEMS_PER_PAGE
 # Create your views here.
+
 
 class item_condition (enum.Enum):
     Cannibalized = 0
@@ -14,8 +19,25 @@ class item_condition (enum.Enum):
 
 
 def home(request):
+    ex_items = 0
+    w_items = 0
+    err_items = 0
+
+    '''for i in Item.objects.all():
+        # Check if an item is expired
+        if ((i.exp_date - date.today()) <= timedelta(0, 0)):
+            ex_items += 1
+        # Check if an item has some missing, but usefull informaton
+        if (i.description == None or len(str(i.description)) < 5 or i.quantity == None or i.location == None):  # needs to be tested
+            w_items += 1
+        # Check if an item has an important Issue'''
     return render(request, "inventory.html",
-                  {})
+                  {
+                    'exp_items': ex_items,  # exp_items.count(),
+                    'warn_items': w_items,  # warn_items.count(),
+                    'error_items': err_items,  # error_items.count(),
+                    'home': True
+                  })
 
 
 def search_inventory(request, query=None, pageid=0):
@@ -33,8 +55,7 @@ def search_inventory(request, query=None, pageid=0):
 
     rccf_bar = Item.objects.filter(rccf_barcode__icontains=searched)
     ucf_bar = Item.objects.filter(ucf_barcode__icontains=searched)
-    sale_bar= Item.objects.filter(sale_barcode__icontains=searched)
-
+    sale_bar = Item.objects.filter(sale_barcode__icontains=searched)
 
     results = names | generals | description | location | rccf_bar | ucf_bar | sale_bar
     results = results.order_by('name')
@@ -62,15 +83,17 @@ def search_inventory(request, query=None, pageid=0):
                    'num_results': num_results,
                    'item_page': item_bio_page,
                    'pages': num_pages_,
+                   'page_num':pageid,
                    })
-
-
 
 
 def lab_location(request, item_id):
     searched_item = Item.objects.filter(id__contains=item_id).first()
     full_loc = str(searched_item.location)
-    location_dir = str(searched_item.location)[:2]
+    location_dir = str(searched_item.location)[:2].lower()
+    if (location_dir[0] == 'l'):
+        location_dir = 'L'
+    location_first_l = str(searched_item.location)[0]
     other_items = Item.objects.filter(
         location__name__icontains=searched_item.location)
     return render(request, 'lab_location.html',
@@ -79,6 +102,7 @@ def lab_location(request, item_id):
                       'dir_loc': location_dir,
                       'full_loc': full_loc,
                       'other_items': other_items,
+                      'first_l': location_first_l,
                   })
 
 
@@ -101,7 +125,7 @@ def item_page(request, item_id):
                   })
 
 
-def items_with_condition(request, c = 123450):
+def items_with_condition(request, c=123450):
     # c is the condition state
     # 0 is Cannibalized
     # 1 is Obsolete
@@ -111,7 +135,7 @@ def items_with_condition(request, c = 123450):
     # 5 is New
     # Error Found :
     #   if c = any int starting with '0' it will not be handled
-    #       
+    #
 
     # C can be a number > 5 to combine searches
     # example :
@@ -129,7 +153,8 @@ def items_with_condition(request, c = 123450):
     s3 = False
     s4 = False
     s5 = False
-    if (c > 5 or not str(c).__len__.__eq__(0)):
+    # expand this system to include items with warnings, or with errors, or that are expired
+    if (c > 8 or not str(c).__len__.__eq__(0)):
         query = str(c)
         for search in query:
             if int(search) == 0:
@@ -171,11 +196,23 @@ def items_with_condition(request, c = 123450):
                       's4': s4,
                       's5': s5,
                   })
+
+
+def notification_table(request):
+    _old = "1999-01-01"
+    
+    expired = Item.objects.filter(exp_date__range=[_old,str(datetime.today().date())])
+    items = expired
+    return render(request,'notifications.html',
+    {
+        'items':items
+    })
 def search_ByValue(request):
     value = 0
     for i in Item.objects.all():
         if i.est_value is not None:
-            value += float(i.est_value)
+            value += float(i.est_value) * float(i.quantity)
+            value = round(value,2)
     return render(request,"search_value.html",{
         'value':value
     })
