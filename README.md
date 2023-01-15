@@ -32,11 +32,6 @@ run the mysql container, with the following options :
         MYSQL_ROOT_PASSWORD = [whatever password you want, just remember it]
 in vs-code, create a dev container using the pacman project
 once both docker containers have stabilized, and are running (5-10min)
-get ip of mysqldb
-    docker ps
-    windows : docker inspect <container id> | findstr "IPAddress"
-    Unix : docker inspect <container id> | grep "IPAddress"
-copy ip and put it in the "host=" section under etc/mysql/my.cnf in this dir
 
 IN THE MYSQL DOCKER CONTAINER
 
@@ -53,9 +48,10 @@ run the following commands :
 IN THE PACMAN DOCKER CONTAINER
 run the following commands : 
     sudo apt install update
-    sudo apt install python3.9-dev default-libmysqlclient-dev build-essential
+    sudo apt install python3.9-dev default-libmysqlclient-dev build-essential nmap
     python3.9 -m pip install django mysqlclient
     cd /workspaces/Pac-Man/pacman
+    python3.9 ./update_db_ip.py
     python3.9 ./manage.py makemigrations inventory
     python3.9 ./manage.py makemigrations 
     python3.9 ./manage.py migrate
